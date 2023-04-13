@@ -1,2 +1,3 @@
 graph/
+target/
 src/main/java/*.java
