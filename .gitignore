@@ -1,2 +1,2 @@
-/graph
-/ca/*.java
+graph/
+src/main/java/*.java
