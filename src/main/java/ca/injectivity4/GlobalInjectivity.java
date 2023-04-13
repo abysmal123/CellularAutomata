@@ -1,4 +1,4 @@
-package ca.Injectivity4;
+package ca.injectivity4;
 
 import java.util.ArrayList;
 import java.util.List;
