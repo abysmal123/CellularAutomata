@@ -121,10 +121,7 @@ public final class injectivityCircleCount {         // d <= 5
     }
 
     private static String getArrow(int len) {
-        StringBuffer buffer = new StringBuffer();
-        buffer.append(" ".repeat(Math.max(0, len / 2)));
-        buffer.append("¡ý");
-        return  buffer.toString();
+        return " ".repeat(Math.max(0, len / 2)) + "¡ý";
     }
 
 }
