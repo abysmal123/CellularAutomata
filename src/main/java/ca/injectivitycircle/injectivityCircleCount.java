@@ -68,6 +68,7 @@ public final class injectivityCircleCount {         // d <= 5
         String arrow = getArrow(n);
         System.out.println("rule:\t\t\t" + r);
         System.out.println("n:   \t\t\t" + n);
+        System.out.println("-------------------------------");
         System.out.println("circle length:\t" + lengthForPrint);
         System.out.println("-------------------------------");
         for (int i = 0; i <= maxConfig; i++) {
