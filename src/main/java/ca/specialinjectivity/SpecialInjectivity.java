@@ -6,6 +6,8 @@ import java.util.List;
 public final class SpecialInjectivity {
 
 // public:
+
+	// 判断pattern是否为单射规则
 	public static boolean isSpecial(final String pattern) {
 			
 		int n = pattern.length(), varPos = -1;
@@ -40,7 +42,8 @@ public final class SpecialInjectivity {
 		}
 		return true;
 	}
-	
+
+	// 构造一个pattern，x（从左到右的）位置为xPos，且除去x后的数字部分为n位二进制数，十进制表示为num
 	public static String toPattern(int num, int n, int xPos) {
 		
 		StringBuffer buffer = new StringBuffer();
@@ -51,20 +54,13 @@ public final class SpecialInjectivity {
 		buffer.insert(xPos, 'x');
 		return buffer.toString();
 	}
-	
-	public static String toWolfram(String pattern, int xPos) {
+
+	// 把pattern转换为对应的wolfram数
+	public static String patternToWolfram(String pattern) {
 		
 		int n = pattern.length();
-		int rule0, rule1;
-		if (pattern.charAt(0) == '1') {
-			rule0 = rule1 = 1;
-		} else if (pattern.charAt(0) == '0') {
-			rule0 = rule1 = 0;
-		} else {
-			rule0 = 0;
-			rule1 = 1;
-		}
-		for (int i = 1; i < n; i++) {
+		int rule0 = 0, rule1 = 0, xPos = 0;
+		for (int i = 0; i < n; i++) {
 			rule0 <<= 1;
 			rule1 <<= 1;
 			if (pattern.charAt(i) == '1') {
@@ -72,6 +68,7 @@ public final class SpecialInjectivity {
 				rule1++;
 			} else if (pattern.charAt(i) == 'x') {
 				rule1++;
+				xPos = i;
 			}
 		}
 		StringBuffer buffer = new StringBuffer();
@@ -84,11 +81,12 @@ public final class SpecialInjectivity {
 			} else {
 				bit = (i >> (n - 1 - xPos)) & 1;
 			}
-			buffer.insert(0, bit);
+			buffer.append(bit);
 		}
-		return buffer.toString();
+		return buffer.reverse().toString();
 	}
-	
+
+	// 返回一个list，其包含所有直径n+1的单射模式, 每条以(wolfram, pattern)二元组记录
 	public static List<String[]> toList(int n) {
 		
 		List<String[]> ruleList = new ArrayList<>();
@@ -96,7 +94,7 @@ public final class SpecialInjectivity {
 			for (int i = 0; i < (1 << n); i++) {
 				String pattern = toPattern(i, n, xPos);
 				if (isSpecial(pattern)) {
-					String wolfram = toWolfram(pattern, xPos);
+					String wolfram = patternToWolfram(pattern);
 					String[] pair = {wolfram, pattern};
 					ruleList.add(pair);
 				}
@@ -105,6 +103,7 @@ public final class SpecialInjectivity {
 		return ruleList;
 	}
 
+	// 把所有直径n+1的单射模式打印到控制台
 	public static void printAll(int n) {
 		
 		int count = 0;
@@ -113,7 +112,7 @@ public final class SpecialInjectivity {
 				String pattern = toPattern(i, n, xPos);
 				if (isSpecial(pattern)) {
 					count++;
-					String wolfram = toWolfram(pattern, xPos);
+					String wolfram = patternToWolfram(pattern);
 					System.out.println(wolfram + ": " + pattern);
 				}
 			}
@@ -124,7 +123,7 @@ public final class SpecialInjectivity {
 // main:
 	public static void main(String[] args) {
 		
-		printAll(4);
+		printAll(3);
 		
 	}
 	

@@ -174,8 +174,8 @@ public final class GlobalInjectivityDn {		// d >= 6
 // main:
 	public static void main(String[] args) {
 		
-		setD(7);
-		String r = "11111111000000001111111100000000111111110000000011111111000000001111111100000000111111110000000011111111000000001111111100000000";
+		setD(5);
+		String r = "11000110010011101100011011001100";
 		System.out.println(injectivity(r));
 	}
 	

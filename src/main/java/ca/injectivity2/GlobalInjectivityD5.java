@@ -145,8 +145,9 @@ public final class GlobalInjectivityD5 {
 // main:
 	public static void main(String[] args) {
 		
-		String r = "11110000111100001111000011110000";
-		System.out.println(injectivity(r));
+//		String r = "11110000111100001111000011110000";
+//		System.out.println(injectivity(r));
+		printInjectiveRules();
 	}
 	
 }
