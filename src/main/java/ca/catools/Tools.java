@@ -3,13 +3,13 @@ package ca.catools;
 public final class Tools {
 
 	// 返回规则的整型表示
-	public static int getRule(String r, int len) {
+	public static long getRule(String r, int len) {
 		
 		if (r.length() != len) {
 			throw new IllegalArgumentException("规则长度必须为" + len + "。 "
 					+ "Length of input rule must be " + len + ". Input rule: " + r);
 		}
-		int rule = 0;
+		long rule = 0;
 		for (int i = 0; i < len; i++) {
 			rule <<= 1;
 			if (r.charAt(i) == '1') {
@@ -25,6 +25,17 @@ public final class Tools {
 	// 将int转换为二进制表示的String
 	public static String toNBitString(int num, int n) {
 		
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < n; i++) {
+			buffer.append(num & 1);
+			num >>= 1;
+		}
+		return buffer.reverse().toString();
+	}
+
+	// 将long转换为二进制表示的String
+	public static String toNBitString(long num, int n) {
+
 		StringBuffer buffer = new StringBuffer();
 		for (int i = 0; i < n; i++) {
 			buffer.append(num & 1);
