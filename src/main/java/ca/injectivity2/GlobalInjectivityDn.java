@@ -34,8 +34,8 @@ public final class GlobalInjectivityDn {		// d >= 6
 			}
 		}
 
-		Queue<LongBinary[]> nodeList = new ArrayDeque<LongBinary[]>();
-		Set<String> visited = new HashSet<String>();
+		Queue<LongBinary[]> nodeList = new ArrayDeque<>();
+		Set<String> visited = new HashSet<>();
 		
 		LongBinary constOne = LongBinary.bOR(new LongBinary(half), new LongBinary("1"));
 		
