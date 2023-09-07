@@ -35,16 +35,16 @@ public final class SpecificNumberZeroECA {
 			if ((cur & MASK) == 0) {
 				edens.add(cur);
 			}
-			int[] childs = edges.get(cur);
+			int[] children = edges.get(cur);
 			for (int i = 0; i < 4; i++) {
 				if (((cur >> i) & 1) == 1) {	
 					int head = (i << 1);
 					for (int tail = 0; tail < 2; tail++) {
-						childs[((rule >> (head + tail)) & 1)] |= (1 << ((head + tail) % 4));
+						children[((rule >> (head + tail)) & 1)] |= (1 << ((head + tail) % 4));
 					}
 				}
 			}
-			for (int child : childs) {
+			for (int child : children) {
 				if (!edges.containsKey(child)) {
 					processList.offer(child);
 					edges.put(child, new int[2]);
@@ -71,8 +71,8 @@ public final class SpecificNumberZeroECA {
 			int now = i & 1, next = (i + 1) & 1;
 			for (Iterator<Integer> it = dp[now].iterator(); it.hasNext();) {
 				int cur = it.next();
-				int[] childs = edges.get(cur);
-				for (int child : childs) {
+				int[] children = edges.get(cur);
+				for (int child : children) {
 					dp[next].add(child);
 					if (edens.contains(child)) {
 						ret[i] = false;
@@ -89,6 +89,33 @@ public final class SpecificNumberZeroECA {
 			}
 		}
 		return ret;
+	}
+
+	public static int getPeriod() throws Exception {		// 计算节点在层中出现规律的周期
+
+		if (edges == null) {
+			throw new Exception("未初始化规则。 Rule uninitialized.");
+		}
+		int[] condMap = new int[1 << 16];
+		Arrays.fill(condMap, -1);
+		int[] dp = new int[2];
+		int root = 3;
+		dp[0] = 1 << root;
+		for (int i = 0;; i++) {
+			int now = i & 1, next = (i + 1) & 1;
+			if (condMap[dp[now]] != -1) {
+				return i - condMap[dp[now]];
+			}
+			condMap[dp[now]] = i;
+			for (int cur = 0; cur < 16; cur++) {
+				if (((dp[now] >> cur) & 1) == 0) continue;
+				int[] children = edges.get(cur);
+				for (int child : children) {
+					dp[next] |= (1 << child);
+				}
+			}
+			dp[now] = 0;
+		}
 	}
 	
 	private static int getRule(String r, int len) {
@@ -118,13 +145,14 @@ public final class SpecificNumberZeroECA {
 // main:
 	public static void main(String[] args) throws Exception {
 		
-		String r = "1001011000011110";
-		int n = 1000;
+		String r = "01101001";
+		int n = 100;
 		initializeRule(r);
-		boolean[] result = reversibilityBefore(n);
-		for (int i = 0; i < n; i++) {
-			System.out.println((i + 1) + ":\t" + result[i]);
-		}
+//		boolean[] result = reversibilityBefore(n);
+//		for (int i = 0; i < n; i++) {
+//			System.out.println((i + 1) + ":\t" + result[i]);
+//		}
+		System.out.println(getPeriod());
 	}
 	
 }

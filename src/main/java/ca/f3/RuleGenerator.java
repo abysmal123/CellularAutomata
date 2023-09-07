@@ -18,6 +18,18 @@ public final class RuleGenerator {
 		}
 		return sb.toString();
 	}
+
+	public static String linearRule(int i, int j, int k, int a) {
+		if (i < 0|| j < 0 || k < 0 || a < 0 || i > 2 || j > 2 || k > 2 || a > 2) {
+			throw new IllegalArgumentException("所有参数取值范围均为{0, 1, 2}。 "
+					+ "All arguments must be valued in {0, 1, 2}. ");
+		}
+		StringBuilder sb = new StringBuilder();
+		for (int b = 0; b < 27; b++) {
+			sb.append((b / 9 * i + b / 3 * j + (b % 3) * k + a) % 3);
+		}
+		return sb.reverse().toString();
+	}
 	
 	public static String[] allLinearRules() {
 		Set<String> rs = new HashSet<>();

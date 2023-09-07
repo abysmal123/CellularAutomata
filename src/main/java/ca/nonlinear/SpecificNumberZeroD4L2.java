@@ -35,16 +35,16 @@ public final class SpecificNumberZeroD4L2 {
 			if ((cur & MASK) == 0) {
 				edens.add(cur);
 			}
-			int[] childs = edges.get(cur);
+			int[] children = edges.get(cur);
 			for (int i = 0; i < 8; i++) {
 				if (((cur >> i) & 1) == 1) {	
 					int head = (i << 1);
 					for (int tail = 0; tail < 2; tail++) {
-						childs[((rule >> (head + tail)) & 1)] |= (1 << ((head + tail) % 8));
+						children[((rule >> (head + tail)) & 1)] |= (1 << ((head + tail) % 8));
 					}
 				}
 			}
-			for (int child : childs) {
+			for (int child : children) {
 				if (!edges.containsKey(child)) {
 					processList.offer(child);
 					edges.put(child, new int[2]);
@@ -71,8 +71,8 @@ public final class SpecificNumberZeroD4L2 {
 			int now = i & 1, next = (i + 1) & 1;
 			for (Iterator<Integer> it = dp[now].iterator(); it.hasNext();) {
 				int cur = it.next();
-				int[] childs = edges.get(cur);
-				for (int child : childs) {
+				int[] children = edges.get(cur);
+				for (int child : children) {
 					dp[next].add(child);
 					if (edens.contains(child)) {
 						ret[i] = false;
@@ -89,6 +89,33 @@ public final class SpecificNumberZeroD4L2 {
 			}
 		}
 		return ret;
+	}
+
+	public static int getPeriod() throws Exception {		// 计算节点在层中出现规律的周期
+
+		if (edges == null) {
+			throw new Exception("未初始化规则。 Rule uninitialized.");
+		}
+		Map<String, Integer> condMap = new HashMap<>();
+		boolean[][] dp = new boolean[2][256];
+		int root = 3;
+		dp[0][root] = true;
+		for (int i = 0;; i++) {
+			int now = i & 1, next = (i + 1) & 1;
+			String cond = hash(dp[now]);
+			if (condMap.containsKey(cond)) {
+				return i - condMap.get(cond);
+			}
+			condMap.put(cond, i);
+			for (int cur = 0; cur < 256; cur++) {
+				if (!dp[now][cur]) continue;
+				int[] children = edges.get(cur);
+				for (int child : children) {
+					dp[next][child] = true;
+				}
+				dp[now][cur] = false;
+			}
+		}
 	}
 	
 	private static int getRule(String r, int len) {
@@ -108,6 +135,20 @@ public final class SpecificNumberZeroD4L2 {
 			}
 		}
 		return rule;
+	}
+
+	private static String hash(boolean[] distribution) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < 8; i++) {
+			int temp = 0;
+			for (int j = 0; j < 32; j++) {
+				temp <<= 1;
+				temp += distribution[i * 32 + j] ? 1 : 0;
+			}
+			sb.append(temp);
+			if (i < 7) sb.append(".");
+		}
+		return sb.toString();
 	}
 	
 	public static void setThreshold(int m) {

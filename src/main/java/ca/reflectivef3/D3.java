@@ -1,60 +1,54 @@
-package ca.nonlinear;
+/* 
+ * 		F3域、直径3、零边界可逆性
+ *  
+ *  */
+package ca.reflectivef3;
 
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
-public final class SpecificNumberZeroD5 {
-	
-// public:
+public final class D3 {
+	public static int[] RULE;
 	public static Map<Integer, int[]> edges;
 	public static Set<Integer> edens;
 	public static boolean hasReversibleLayer;
 	public static boolean hasIrreversibleLayer;
 	public static int threshold = 0;
 	
+// public:
 	public static void initializeRule(final String r) {		// 由规则构造图
-		
-		int rule = getRule(r, 1 << 5);
+		RULE = getRule(r);
 		edges = new HashMap<>();
 		edens = new HashSet<>();
 		hasReversibleLayer = false;
 		hasIrreversibleLayer = false;
 		Queue<Integer> processList = new ArrayDeque<>();
-		int MASK = 4369;		// 2^0 + 2^4 + 2^8 + 2^12 (0000, 0100, 1000, 1100)
-		int root = 15;
+		int root = 273;		// 00(2^0 = 1), 11(2^4 = 16), 22(2^8 = 256)
 		processList.offer(root);
-		edges.put(root, new int[2]);
+		edges.put(root, new int[3]);
 		while (!processList.isEmpty()) {
 			int cur = processList.poll();
-			if ((cur & MASK) == 0) {
+			if ((cur & root) == 0) {
 				edens.add(cur);
 			}
-			int[] children = edges.get(cur);
-			for (int i = 0; i < 16; i++) {
+			int[] childs = edges.get(cur);
+			for (int i = 0; i < 9; i++) {
 				if (((cur >> i) & 1) == 1) {	
-					int head = (i << 1);
-					for (int tail = 0; tail < 2; tail++) {
-						children[((rule >> (head + tail)) & 1)] |= (1 << ((head + tail) % 16));
+					int head = i * 3;
+					for (int tail = 0; tail < 3; tail++) {
+						childs[RULE[head + tail]] |= (1 << ((head + tail) % 9));
 					}
 				}
 			}
-			for (int child : children) {
+			for (int child : childs) {
 				if (!edges.containsKey(child)) {
 					processList.offer(child);
-					edges.put(child, new int[2]);
+					edges.put(child, new int[3]);
 				}
 			}
 		}
 	}
 	
 	public static boolean[] reversibilityBefore(int n) throws Exception {	// 前n层每层的可逆性
-		
 		if (edges == null) {
 			throw new Exception("未初始化规则。 Rule uninitialized.");
 		}
@@ -64,15 +58,15 @@ public final class SpecificNumberZeroD5 {
 		Set<Integer>[] dp = new Set[2];
 		dp[0] = new HashSet<>();
 		dp[1] = new HashSet<>();
-		int root = 15;
+		int root = 273;
 		dp[0].add(root);
 		for (int i = 0; i < n; i++) {
 			boolean flag = true;
 			int now = i & 1, next = (i + 1) & 1;
 			for (Iterator<Integer> it = dp[now].iterator(); it.hasNext();) {
 				int cur = it.next();
-				int[] children = edges.get(cur);
-				for (int child : children) {
+				int[] childs = edges.get(cur);
+				for (int child : childs) {
 					dp[next].add(child);
 					if (edens.contains(child)) {
 						ret[i] = false;
@@ -97,8 +91,8 @@ public final class SpecificNumberZeroD5 {
 			throw new Exception("未初始化规则。 Rule uninitialized.");
 		}
 		Map<String, Integer> condMap = new HashMap<>();
-		boolean[][] dp = new boolean[2][65536];
-		int root = 15;
+		boolean[][] dp = new boolean[2][512];
+		int root = 273;
 		dp[0][root] = true;
 		for (int i = 0;; i++) {
 			int now = i & 1, next = (i + 1) & 1;
@@ -107,7 +101,7 @@ public final class SpecificNumberZeroD5 {
 				return i - condMap.get(cond);
 			}
 			condMap.put(cond, i);
-			for (int cur = 0; cur < 65536; cur++) {
+			for (int cur = 0; cur < 512; cur++) {
 				if (!dp[now][cur]) continue;
 				int[] children = edges.get(cur);
 				for (int child : children) {
@@ -118,49 +112,51 @@ public final class SpecificNumberZeroD5 {
 		}
 	}
 	
-	private static int getRule(String r, int len) {
-		
-		if (r.length() != len) {
-			throw new IllegalArgumentException("规则长度必须为" + len + "。 "
-					+ "Length of input rule must be " + len + ". Input rule: " + r);
+	public static int[] getRule(String r) {
+		if (r.length() != 27) {
+			throw new IllegalArgumentException("规则长度必须为27。 输入长度：" + r.length());
 		}
-		int rule = 0;
-		for (int i = 0; i < len; i++) {
-			rule <<= 1;
-			if (r.charAt(i) == '1') {
-				rule |= 1;
-			} else if (r.charAt(i) != '0') {
-				throw new IllegalArgumentException("规则必须为01串。"
-						+ "Input rule must be binary. Input rule: " + r);
+		int[] rule = new int[27];
+		for (int i = 0; i < 27; i++) {
+			int b = r.charAt(26 - i) - '0';
+			if (b < 0 || b > 2) {
+				throw new IllegalArgumentException("规则串必须仅由012组成。");
 			}
+			rule[i] = b;
 		}
 		return rule;
 	}
 
 	private static String hash(boolean[] distribution) {
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < 1024; i++) {
+		for (int i = 0; i < 8; i++) {
 			long temp = 0;
 			for (int j = 0; j < 64; j++) {
 				temp <<= 1;
 				temp += distribution[i * 64 + j] ? 1 : 0;
 			}
 			sb.append(temp);
-			if (i < 1023) sb.append(".");
+			if (i < 7) sb.append(".");
 		}
 		return sb.toString();
 	}
 	
+	public static String toTernaryString(int[] rule) {
+		StringBuilder sb = new StringBuilder();
+		for (int b : rule) {
+			sb.append(b);
+		}
+		return sb.reverse().toString();
+	}
+	
 	public static void setThreshold(int m) {
-		
 		threshold = m;
 	}
 	
 // main:
 	public static void main(String[] args) throws Exception {
-		
-		String r = "11001100001100110011001111001100";
-		int n = 1000;
+		String r = ca.f3.RuleGenerator.linearRule(1, 2, 2, 0);
+		int n = 100;
 		initializeRule(r);
 		boolean[] result = reversibilityBefore(n);
 		for (int i = 0; i < n; i++) {

@@ -92,7 +92,33 @@ public final class D3 {
 		}
 		return ret;
 	}
-	
+
+	public static int getPeriod() throws Exception {		// 计算节点在层中出现规律的周期
+
+		if (edges == null) {
+			throw new Exception("未初始化规则。 Rule uninitialized.");
+		}
+		Map<String, Integer> condMap = new HashMap<>();
+		boolean[][] dp = new boolean[2][512];
+		int root = 7;
+		dp[0][root] = true;
+		for (int i = 0;; i++) {
+			int now = i & 1, next = (i + 1) & 1;
+			String cond = hash(dp[now]);
+			if (condMap.containsKey(cond)) {
+				return i - condMap.get(cond);
+			}
+			condMap.put(cond, i);
+			for (int cur = 0; cur < 512; cur++) {
+				if (!dp[now][cur]) continue;
+				int[] children = edges.get(cur);
+				for (int child : children) {
+					dp[next][child] = true;
+				}
+				dp[now][cur] = false;
+			}
+		}
+	}
 	
 	public static int[] getRule(String r) {
 		if (r.length() != 27) {
@@ -107,6 +133,20 @@ public final class D3 {
 			rule[i] = b;
 		}
 		return rule;
+	}
+
+	private static String hash(boolean[] distribution) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < 8; i++) {
+			long temp = 0;
+			for (int j = 0; j < 64; j++) {
+				temp <<= 1;
+				temp += distribution[i * 64 + j] ? 1 : 0;
+			}
+			sb.append(temp);
+			if (i < 7) sb.append(".");
+		}
+		return sb.toString();
 	}
 	
 	public static String toTernaryString(int[] rule) {
