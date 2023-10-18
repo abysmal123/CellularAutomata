@@ -46,7 +46,7 @@ public final class ShowProcedureTreeECA {
 	
 	private static MutableGraph toGraph(String r) {
 		
-		MutableGraph graph = mutGraph("Zero " + r).setDirected(true);
+		MutableGraph graph = mutGraph("Null " + r).setDirected(true);
 		graph.graphAttrs().add(Label.graphName().locate(Location.TOP));
 		count = 0;
 		edges = new HashMap<>();
