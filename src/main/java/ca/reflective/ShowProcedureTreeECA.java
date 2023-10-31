@@ -164,14 +164,8 @@ public final class ShowProcedureTreeECA {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		setPath("graph/reflective_eca/");
-		for (int i = 0; i < 256; i++) {
-			if (Integer.bitCount(i) != 4) {
-				continue;
-			}
-			String r = toEightBitString(i);
-			storeImage(r);
-		}
+		setPath("graph/test2023.10.28/");
+		storeImage("10010110");
 	}
 	
 	public static String toEightBitString(int num) {

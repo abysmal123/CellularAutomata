@@ -47,7 +47,7 @@ public final class ShowLayerGraphD3 {
 	
 	private static MutableGraph toGraph(String r) {
 		
-		MutableGraph graph = mutGraph("Zero " + r).setDirected(true);
+		MutableGraph graph = mutGraph("Reflective " + r).setDirected(true);
 		graph.graphAttrs().add(Label.graphName().locate(Location.TOP));
 		count = 0;
 		edges = new HashMap<>();
@@ -57,7 +57,7 @@ public final class ShowLayerGraphD3 {
 		return graph;
 	}
 	
-	public static void draw(final String r, MutableGraph graph) {
+	private static void draw(final String r, MutableGraph graph) {
 		
 		int[] RULE = getRule(r);
 		edges = new HashMap<>();

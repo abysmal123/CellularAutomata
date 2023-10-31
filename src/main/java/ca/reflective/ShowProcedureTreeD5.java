@@ -165,7 +165,7 @@ public final class ShowProcedureTreeD5 {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		setPath("graph/test2023.9.10/");
-		storeImage("10100101010110101010010101011010");
+		setPath("graph/test2023.10.28/");
+		storeImage("11110000111100001111000011110000");
 	}
 }

@@ -19,10 +19,10 @@ import static guru.nidi.graphviz.model.Factory.*;
 public final class ShowProcedureTreeD3 {
 
 // public:
-	public static void storeImage(String r) throws IOException {
+	public static void storeImage(String r, String fileName) throws IOException {
 		
 		MutableGraph graph = toGraph(r);
-		Graphviz.fromGraph(graph).render(Format.PNG).toFile(new File(PATH + r + ".png"));
+		Graphviz.fromGraph(graph).render(Format.PNG).toFile(new File(PATH + fileName + ".png"));
 	}
 	
 	public static void setPath(String path) {
@@ -42,7 +42,7 @@ public final class ShowProcedureTreeD3 {
 	
 	private static MutableGraph toGraph(String r) {
 		
-		MutableGraph graph = mutGraph("Zero " + r).setDirected(true);
+		MutableGraph graph = mutGraph("Reflective " + r).setDirected(true);
 		graph.graphAttrs().add(Label.graphName().locate(Location.TOP));
 		count = 0;
 		edges = new HashMap<>();
@@ -52,7 +52,7 @@ public final class ShowProcedureTreeD3 {
 		return graph;
 	}
 	
-	public static void draw(final String r, MutableGraph graph) {
+	private static void draw(final String r, MutableGraph graph) {
 		
 		int[] RULE = getRule(r);
 		edges = new HashMap<>();
@@ -151,11 +151,6 @@ public final class ShowProcedureTreeD3 {
 			num /= 3;
 		}
 		return buffer.toString();
-	}
-	
-	public static void main(String[] args) throws IOException {
-		setPath("graph/test2023.8.29/");
-		storeImage("222122122001001000110210211");
 	}
 	
 }
