@@ -37,7 +37,12 @@ public final class Tools {
 		}
 		boolean[] RULE = new boolean[r.length()];
 		for (int i = r.length() - 1, j = 0; i >= 0; i--, j++) {
-			RULE[i] = r.charAt(j) == '1';
+			char bit = r.charAt(j);
+			if (bit != '0' && bit != '1') {
+				throw new IllegalArgumentException("规则必须为01串。"
+						+ "Input rule must be binary. Input rule: " + r);
+			}
+			RULE[i] = bit == '1';
 		}
 		return RULE;
 	}
@@ -45,23 +50,23 @@ public final class Tools {
 	// 将int转换为二进制表示的String
 	public static String toNBitString(int num, int n) {
 		
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < n; i++) {
-			buffer.append(num & 1);
+			sb.append(num & 1);
 			num >>= 1;
 		}
-		return buffer.reverse().toString();
+		return sb.reverse().toString();
 	}
 
 	// 将long转换为二进制表示的String
 	public static String toNBitString(long num, int n) {
 
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < n; i++) {
-			buffer.append(num & 1);
+			sb.append(num & 1);
 			num >>= 1;
 		}
-		return buffer.reverse().toString();
+		return sb.reverse().toString();
 	}
 
 	// 将二进制表示的String转换为int

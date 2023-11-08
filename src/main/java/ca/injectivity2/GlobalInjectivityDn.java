@@ -18,10 +18,10 @@ public final class GlobalInjectivityDn {		// d >= 6
 		
 		int wolframLen = (1 << d), half = (1 << (d - 1));
 		if (r.length() != wolframLen) {
-			throw new IllegalArgumentException("¹æÔò³¤¶È´íÎó ¡£");
+			throw new IllegalArgumentException("è§„åˆ™é•¿åº¦é”™è¯¯ ã€‚");
 		}
 		if (r.charAt(0) != '0' && r.charAt(0) != '1') {
-			throw new IllegalArgumentException("¹æÔò±ØĞëÎª01´®¡£"
+			throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 					+ "Input rules must be binary. Input rules: " + r);
 		}
 		LongBinary rules = new LongBinary(wolframLen);
@@ -29,7 +29,7 @@ public final class GlobalInjectivityDn {		// d >= 6
 			if (r.charAt(i) == '1') {
 				rules.setPos(i, 1);
 			} else if (r.charAt(i) != '0') {
-				throw new IllegalArgumentException("¹æÔò±ØĞëÎª01´®¡£"
+				throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 						+ "Input rules must be binary. Input rules: " + r);
 			}
 		}
@@ -117,9 +117,9 @@ public final class GlobalInjectivityDn {		// d >= 6
 				System.out.println(r);
 			}
 		}
-		System.out.println("×Ü¼Æ" + cases.length + "Ìõ¹æÔò£¬ÆäÖĞ" + count + "Ìõµ¥Éä¹æÔò£¬" + (cases.length - count) + "Ìõ·Çµ¥Éä¹æÔò");
+		System.out.println("æ€»è®¡" + cases.length + "æ¡è§„åˆ™ï¼Œå…¶ä¸­" + count + "æ¡å•å°„è§„åˆ™ï¼Œ" + (cases.length - count) + "æ¡éå•å°„è§„åˆ™");
 		long end = System.currentTimeMillis();
-		System.out.println("Ö´ĞĞÓÃÊ±£º" + String.valueOf(end - begin) + "ms.");
+		System.out.println("æ‰§è¡Œç”¨æ—¶ï¼š" + String.valueOf(end - begin) + "ms.");
 	}
 	
 	public static void printInjectiveRules() {
@@ -130,9 +130,9 @@ public final class GlobalInjectivityDn {		// d >= 6
 		Arrays.fill(rulesCharArr, '0');
 		rulesCharArr[0] = '1';
 		dfs(1, 1);
-		System.out.println("×Ü¼Æ" + count + "Ìõ¹æÔò");
+		System.out.println("æ€»è®¡" + count + "æ¡è§„åˆ™");
 		long end = System.currentTimeMillis();
-		System.out.println("Ö´ĞĞÓÃÊ±£º" + String.valueOf(end - begin) + "ms.");
+		System.out.println("æ‰§è¡Œç”¨æ—¶ï¼š" + String.valueOf(end - begin) + "ms.");
 	}
 	
 // private:
