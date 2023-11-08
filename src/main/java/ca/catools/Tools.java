@@ -22,6 +22,7 @@ public final class Tools {
 		return rule;
 	}
 
+	// 返回规则的布尔数组表示
 	public static boolean[] getRule(String r) {
 		int d = 0, len = r.length();
 		while (len > 1) {
