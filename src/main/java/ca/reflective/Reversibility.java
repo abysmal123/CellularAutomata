@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Queue;
 
 public final class Reversibility {
-    public static boolean reversible(String r){
+    public static boolean reversible(String r) {
         int d = checkLength(r);
         boolean[] RULE = getRule(r);
         Map<RTNode, RTNode[]> edges = new HashMap<>();

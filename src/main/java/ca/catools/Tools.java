@@ -22,6 +22,25 @@ public final class Tools {
 		return rule;
 	}
 
+	public static boolean[] getRule(String r) {
+		int d = 0, len = r.length();
+		while (len > 1) {
+			if ((len & 1) == 1) {
+				throw new IllegalArgumentException("规则长度不为2的整数幂。");
+			}
+			d++;
+			len >>= 1;
+		}
+		if (d < 3) {
+			throw new IllegalArgumentException("直径至少为3。");
+		}
+		boolean[] RULE = new boolean[r.length()];
+		for (int i = r.length() - 1, j = 0; i >= 0; i--, j++) {
+			RULE[i] = r.charAt(j) == '1';
+		}
+		return RULE;
+	}
+
 	// 将int转换为二进制表示的String
 	public static String toNBitString(int num, int n) {
 		

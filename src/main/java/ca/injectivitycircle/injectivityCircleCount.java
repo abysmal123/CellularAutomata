@@ -3,12 +3,14 @@ package ca.injectivitycircle;
 import java.util.*;
 import ca.catools.Tools;
 
-public final class injectivityCircleCount {         // d <= 6
+import javax.tools.Tool;
+
+public final class injectivityCircleCount {     // d >= 3
 
     // 统计环（规则，左半径，右半径，细胞数，移位相同是否视为同一配置，是否打印到控制台）,打印环长分布列表，返回环长分布的位图（bitmap）
     public static long showCircleList(String r, int lr, int rr, int n, boolean shiftingAsOne, boolean show) {
         int d = lr + rr + 1;
-        long rule = Tools.getRule(r, 1 << d);
+        boolean[] rule = Tools.getRule(r);
         int ruleMask = (1 << d) - 1;
         int lBoundaryMask = (1 << lr) - 1;
         int rBoundaryMask = (1 << rr) - 1;
@@ -38,7 +40,7 @@ public final class injectivityCircleCount {         // d <= 6
                 int image = 0;
                 for (int j = 0; j < n; j++) {
                     image <<= 1;
-                    image |= (rule >> ((preimage >> (n - 1 - j)) & ruleMask)) & 1;
+                    image |= rule[(preimage >> (n - 1 - j)) & ruleMask] ? 1 : 0;
                 }
                 curConfig = image;
                 loop++;
@@ -64,7 +66,7 @@ public final class injectivityCircleCount {         // d <= 6
     // 打印特定长度的环（规则，左半径，右半径，细胞数，移位相同是否视为同一配置，环长度，起始序号，末尾序号）
     public static void showCircleWithLength(String r, int lr, int rr, int n, boolean shiftingAsOne, int lengthForPrint, int startNum, int endNum) {
         int d = lr + rr + 1;
-        long rule = Tools.getRule(r, 1 << d);
+        boolean[] rule = Tools.getRule(r);
         int ruleMask = (1 << d) - 1;
         int lBoundaryMask = (1 << lr) - 1;
         int rBoundaryMask = (1 << rr) - 1;
@@ -103,7 +105,7 @@ public final class injectivityCircleCount {         // d <= 6
                 int image = 0;
                 for (int j = 0; j < n; j++) {
                     image <<= 1;
-                    image |= (rule >> ((preimage >> (n - 1 - j)) & ruleMask)) & 1;
+                    image |= rule[(preimage >> (n - 1 - j)) & ruleMask] ? 1 : 0;
                 }
                 curConfig = image;
                 loop++;
@@ -130,7 +132,7 @@ public final class injectivityCircleCount {         // d <= 6
     public static void showConfigInCircle(String r, int lr, int rr, String c, boolean shiftingAsOne) {
         int d = lr + rr + 1;
         int n = c.length();
-        long rule = Tools.getRule(r, 1 << d);
+        boolean[] rule = Tools.getRule(r);
         int config = Tools.toInteger(c);
         int ruleMask = (1 << d) - 1;
         int lBoundaryMask = (1 << lr) - 1;
@@ -164,7 +166,7 @@ public final class injectivityCircleCount {         // d <= 6
             int image = 0;
             for (int j = 0; j < n; j++) {
                 image <<= 1;
-                image |= (rule >> ((preimage >> (n - 1 - j)) & ruleMask)) & 1;
+                image |= rule[(preimage >> (n - 1 - j)) & ruleMask] ? 1 : 0;
             }
             curConfig = image;
             loop++;
@@ -196,7 +198,76 @@ public final class injectivityCircleCount {         // d <= 6
         return buffer.toString();
     }
 
-    private static String getArrow(int len) {
+    // 找到多对一的配置（规则，左半径，右半径，细胞个数，打印起始编号，打印终止编号）
+    public static Map<Integer, List<Integer>> findManyForOne(String r, int lr, int rr, int n, int startNum, int endNum) {
+        int d = lr + rr + 1;
+        boolean[] rule = Tools.getRule(r);
+        int ruleMask = (1 << d) - 1;
+        int lBoundaryMask = (1 << lr) - 1;
+        int rBoundaryMask = (1 << rr) - 1;
+        int maxConfig = (1 << n) - 1;
+        Map<Integer, List<Integer>> evolutionMap = new TreeMap<>();
+        boolean[] visited = new boolean[maxConfig + 1];
+        String arrow = getArrow(n);
+        System.out.println("rule:\t\t\t" + r);
+        System.out.println("n:   \t\t\t" + n);
+        System.out.println("-------------------------------");
+        for (int i = 0; i <= maxConfig; i++) {
+            if (visited[i]) continue;
+            int periodicConfig = i;
+            for (int k = 0; k < n; k++) {
+                if (visited[periodicConfig]) {
+                    break;
+                }
+                visited[periodicConfig] = true;
+                periodicConfig = ((periodicConfig << 1) & maxConfig) | ((periodicConfig >> (n - 1)) & 1);
+            }
+            int preimage = ((i & lBoundaryMask) << (n + rr)) | (i << rr) | ((i >> (n - rr)) & rBoundaryMask);
+            int image = 0;
+            for (int j = 0; j < n; j++) {
+                image <<= 1;
+                image |= rule[(preimage >> (n - 1 - j)) & ruleMask] ? 1 : 0;
+            }
+            int periodicImage = image;
+            for (int k = 0; k < n; k++) {
+                if (evolutionMap.containsKey(periodicImage)) {
+                    break;
+                }
+                periodicImage = ((periodicImage << 1) & maxConfig) | ((periodicImage >> (n - 1)) & 1);
+            }
+            evolutionMap.putIfAbsent(periodicImage, new ArrayList<>());
+            evolutionMap.get(periodicImage).add(i);
+        }
+        int cnt = 0;
+        for (Map.Entry<Integer, List<Integer>> entry : evolutionMap.entrySet()) {
+            if (entry.getValue().size() > 1) {
+                cnt++;
+            }
+        }
+        System.out.println("Number of Many-For-One:\t\t" + cnt);
+        System.out.println("-------------------------------");
+        int num = 0;
+        for (Map.Entry<Integer, List<Integer>> entry : evolutionMap.entrySet()) {
+            if (entry.getValue().size() > 1) {
+                num++;
+                if (num < startNum || num > endNum) {
+                    continue;
+                }
+                StringBuilder sb = new StringBuilder("[");
+                for (int c : entry.getValue()) {
+                    sb.append(Tools.toNBitString(c, n)).append(',');
+                }
+                sb.setCharAt(sb.length() - 1, ']');
+                System.out.println(sb.toString());
+                System.out.println(arrow);
+                System.out.println(Tools.toNBitString(entry.getKey(), n));
+                System.out.println("-------------------------------");
+            }
+        }
+        return evolutionMap;
+    }
+
+    public static String getArrow(int len) {
         return " ".repeat(Math.max(0, len / 2)) + "↓";
     }
 
