@@ -57,9 +57,9 @@ public class InfiniteConfigurationD5 {
 		rulesCharArr = new char[32];
 		Arrays.fill(rulesCharArr, '0');
 		dfs(0, 0);
-		System.out.println("×Ü¼Æ" + count + "Ìõ¹æÔò");
+		System.out.println("æ€»è®¡" + count + "æ¡è§„åˆ™");
 		long end = System.currentTimeMillis();
-		System.out.println("Ö´ĞĞÓÃÊ±£º" + String.valueOf(end - begin) + "ms.");
+		System.out.println("æ‰§è¡Œç”¨æ—¶ï¼š" + String.valueOf(end - begin) + "ms.");
 	}
 	
 // private:
@@ -84,7 +84,7 @@ public class InfiniteConfigurationD5 {
 	
 	private static int getRule(String r, int len) {
 		if (r.length() != len) {
-			throw new IllegalArgumentException("¹æÔò³¤¶È±ØĞëÎª" + len + "¡£ "
+			throw new IllegalArgumentException("è§„åˆ™é•¿åº¦å¿…é¡»ä¸º" + len + "ã€‚ "
 					+ "Length of input rule must be " + len + ". Input rule: " + r);
 		}
 		int rule = 0;
@@ -93,7 +93,7 @@ public class InfiniteConfigurationD5 {
 			if (r.charAt(i) == '1') {
 				rule |= 1;
 			} else if (r.charAt(i) != '0') {
-				throw new IllegalArgumentException("¹æÔò±ØĞëÎª01´®¡£"
+				throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 						+ "Input rule must be binary. Input rule: " + r);
 			}
 		}

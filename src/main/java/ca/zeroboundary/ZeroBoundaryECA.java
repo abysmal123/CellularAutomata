@@ -13,16 +13,16 @@ public final class ZeroBoundaryECA {
 	public ZeroBoundaryECA(final String r, int n) {
 		
 		if (n < 1) {
-			throw new IllegalArgumentException("Ï¸°ûÊýÖÁÉÙÎª1 ¡£"
+			throw new IllegalArgumentException("ç»†èƒžæ•°è‡³å°‘ä¸º1 ã€‚"
 					+ "Number of cells should be at Least 1. Input n: " + n);
 		}
 		this.n = n;
 		if (r.length() != 8) {
-			throw new IllegalArgumentException("ECAµÄ¹æÔò³¤¶È±ØÐëÎª8 ¡£"
+			throw new IllegalArgumentException("ECAçš„è§„åˆ™é•¿åº¦å¿…é¡»ä¸º8 ã€‚"
 					+ "Length of ECA's rules must be 8. Input rules: " + r);
 		}
 		if (r.charAt(0) != '0' && r.charAt(0) != '1') {
-			throw new IllegalArgumentException("¹æÔò±ØÐëÎª01´®¡£"
+			throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 					+ "Input rules must be binary. Input rules: " + r);
 		}
 		rules = r.charAt(0) == '1' ? 1 : 0;
@@ -31,7 +31,7 @@ public final class ZeroBoundaryECA {
 			if (r.charAt(i) == '1') {
 				rules++;
 			} else if (r.charAt(i) != '0') {
-				throw new IllegalArgumentException("¹æÔò±ØÐëÎª01´®¡£"
+				throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 						+ "Input rules must be binary. Input rules: " + r);
 			}
 		}

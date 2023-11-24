@@ -16,11 +16,11 @@ public final class GlobalInjectivityD4 {
 	public static boolean injectivity(final String r) {
 		
 		if (r.length() != 16) {
-			throw new IllegalArgumentException("¹æÔò³¤¶È±ØĞëÎª16 ¡£"
+			throw new IllegalArgumentException("è§„åˆ™é•¿åº¦å¿…é¡»ä¸º16 ã€‚"
 					+ "Length of rules must be 16. Input rules: " + r);
 		}
 		if (r.charAt(0) != '0' && r.charAt(0) != '1') {
-			throw new IllegalArgumentException("¹æÔò±ØĞëÎª01´®¡£"
+			throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 					+ "Input rules must be binary. Input rules: " + r);
 		}
 		int rules = (r.charAt(0) == '1' ? 1 : 0);
@@ -29,7 +29,7 @@ public final class GlobalInjectivityD4 {
 			if (r.charAt(i) == '1') {
 				rules++;
 			} else if (r.charAt(i) != '0') {
-				throw new IllegalArgumentException("¹æÔò±ØĞëÎª01´®¡£"
+				throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 						+ "Input rules must be binary. Input rules: " + r);
 			}
 		}
@@ -142,9 +142,9 @@ public final class GlobalInjectivityD4 {
 				count++;
 			}
 		}
-		System.out.println("×Ü¼Æ" + count + "Ìõ¹æÔò");
+		System.out.println("æ€»è®¡" + count + "æ¡è§„åˆ™");
 		long end = System.currentTimeMillis();
-		System.out.println("Ö´ĞĞÓÃÊ±£º" + String.valueOf(end - begin) + "ms.");
+		System.out.println("æ‰§è¡Œç”¨æ—¶ï¼š" + String.valueOf(end - begin) + "ms.");
 	}
 	
 	public static String toSixteenBitString(int num) {

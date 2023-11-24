@@ -68,7 +68,7 @@ public final class ShowLayerGraphECA {
 		processList.offer(root);
 		edges.put(root, new ValueSet[]{new ValueSet(4), new ValueSet(4)});
 		
-		// ´´½¨rootÍ¼½Úµã
+		// åˆ›å»ºrootå›¾èŠ‚ç‚¹
 		MutableNode rootNode = mutNode((count++) + "");
 		rootNode.add(Shape.RECTANGLE, Style.ROUNDED, Label.html(0 + ""));
 		
@@ -118,7 +118,7 @@ public final class ShowLayerGraphECA {
 	private static int getRule(String r, int len) {
 		
 		if (r.length() != len) {
-			throw new IllegalArgumentException("¹æÔò³¤¶È±ØÐëÎª" + len + "¡£ "
+			throw new IllegalArgumentException("è§„åˆ™é•¿åº¦å¿…é¡»ä¸º" + len + "ã€‚ "
 					+ "Length of input rule must be " + len + ". Input rule: " + r);
 		}
 		int rule = 0;
@@ -127,7 +127,7 @@ public final class ShowLayerGraphECA {
 			if (r.charAt(i) == '1') {
 				rule |= 1;
 			} else if (r.charAt(i) != '0') {
-				throw new IllegalArgumentException("¹æÔò±ØÐëÎª01´®¡£"
+				throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 						+ "Input rule must be binary. Input rule: " + r);
 			}
 		}

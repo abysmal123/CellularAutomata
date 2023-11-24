@@ -62,11 +62,11 @@ public final class VisualizationD4Root {
 	private static void initializeTree(String r) {
 
 		if (r.length() != 16) {
-			throw new IllegalArgumentException("¹æÔò³¤¶È±ØÐëÎª16 ¡£"
+			throw new IllegalArgumentException("è§„åˆ™é•¿åº¦å¿…é¡»ä¸º16 ã€‚"
 					+ "Length of rules must be 16. Input rules: " + r);
 		}
 		if (r.charAt(0) != '0' && r.charAt(0) != '1') {
-			throw new IllegalArgumentException("¹æÔò±ØÐëÎª01´®¡£"
+			throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 					+ "Input rules must be binary. Input rules: " + r);
 		}
 		Set<String> visited = new HashSet<String>();

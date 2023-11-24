@@ -36,13 +36,13 @@ public final class Reversibility {
         int d = 0, len = r.length();
         while (len > 1) {
             if ((len & 1) == 1) {
-                throw new IllegalArgumentException("¹æÔò³¤¶È²»Îª2µÄÕûÊýÃÝ¡£");
+                throw new IllegalArgumentException("è§„åˆ™é•¿åº¦ä¸ä¸º2çš„æ•´æ•°å¹‚ã€‚");
             }
             d++;
             len >>= 1;
         }
         if (d < 3) {
-            throw new IllegalArgumentException("Ö±¾¶ÖÁÉÙÎª3¡£");
+            throw new IllegalArgumentException("ç›´å¾„è‡³å°‘ä¸º3ã€‚");
         }
         return d;
     }

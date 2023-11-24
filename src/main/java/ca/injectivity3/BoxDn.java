@@ -42,7 +42,7 @@ public final class BoxDn {
 				if (rules.getPos(prefix1 + i) == rules.getPos(prefix2 + j) && prefix1 + i != prefix2 + j) {
 					BoxDn box = new BoxDn(d, prefix1 + i, prefix2 + j);
 					sequentSet.add(box);
-//					System.out.println("Ïò("+n1+", "+n2+")µÄsequent setÖĞÌí¼Ó("+(prefix1 + i)+", "+(prefix2 + j)+").");
+//					System.out.println("å‘("+n1+", "+n2+")çš„sequent setä¸­æ·»åŠ ("+(prefix1 + i)+", "+(prefix2 + j)+").");
 					map.putIfAbsent(box, new ArrayList<BoxDn>());
 					map.get(box).add(this);
 				}

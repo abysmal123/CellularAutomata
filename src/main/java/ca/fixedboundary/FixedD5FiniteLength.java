@@ -14,22 +14,22 @@ public class FixedD5FiniteLength {
 	public static void setBoundary(int[] left, int[] right) {
 		
 		if (left.length != 2) {
-			throw new IllegalArgumentException("×ó±ß½ç³¤¶È±ØĞëÎª2¡£"
+			throw new IllegalArgumentException("å·¦è¾¹ç•Œé•¿åº¦å¿…é¡»ä¸º2ã€‚"
 					+ "Length of left boundary must be 2. Input length: " + left.length);
 		}
 		if (right.length != 2) {
-			throw new IllegalArgumentException("ÓÒ±ß½ç³¤¶È±ØĞëÎª2¡£"
+			throw new IllegalArgumentException("å³è¾¹ç•Œé•¿åº¦å¿…é¡»ä¸º2ã€‚"
 					+ "Length of right boundary must be 2. Input length: " + right.length);
 		}
 		for (int e : left) {
 			if(e != 0 && e != 1) {
-				throw new IllegalArgumentException("±ß½ç×´Ì¬±ØĞëÎª0»ò1 ¡£"
+				throw new IllegalArgumentException("è¾¹ç•ŒçŠ¶æ€å¿…é¡»ä¸º0æˆ–1 ã€‚"
 						+ "Boundary states must be 0 or 1.");
 			}
 		}
 		for (int e : right) {
 			if(e != 0 && e != 1) {
-				throw new IllegalArgumentException("±ß½ç×´Ì¬±ØĞëÎª0»ò1 ¡£"
+				throw new IllegalArgumentException("è¾¹ç•ŒçŠ¶æ€å¿…é¡»ä¸º0æˆ–1 ã€‚"
 						+ "Boundary states must be 0 or 1.");
 			}
 		}
@@ -40,11 +40,11 @@ public class FixedD5FiniteLength {
 	public static boolean hasEden(String r) {
 		
 		if (r.length() != 32) {
-			throw new IllegalArgumentException("¹æÔò³¤¶È±ØĞëÎª32 ¡£"
+			throw new IllegalArgumentException("è§„åˆ™é•¿åº¦å¿…é¡»ä¸º32 ã€‚"
 					+ "Length of rules must be 32. Input rules: " + r);
 		}
 		if (r.charAt(0) != '0' && r.charAt(0) != '1') {
-			throw new IllegalArgumentException("¹æÔò±ØĞëÎª01´®¡£"
+			throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 					+ "Input rules must be binary. Input rules: " + r);
 		}
 		int rules = (r.charAt(0) == '1' ? 1 : 0);
@@ -53,7 +53,7 @@ public class FixedD5FiniteLength {
 			if (r.charAt(i) == '1') {
 				rules++;
 			} else if (r.charAt(i) != '0') {
-				throw new IllegalArgumentException("¹æÔò±ØĞëÎª01´®¡£"
+				throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 						+ "Input rules must be binary. Input rules: " + r);
 			}
 		}
@@ -106,9 +106,9 @@ public class FixedD5FiniteLength {
 		rulesCharArr = new char[32];
 		Arrays.fill(rulesCharArr, '0');
 		dfs(0, 0);
-		System.out.println("×Ü¼Æ" + count + "Ìõ¹æÔò");
+		System.out.println("æ€»è®¡" + count + "æ¡è§„åˆ™");
 		long end = System.currentTimeMillis();
-		System.out.println("Ö´ĞĞÓÃÊ±£º" + String.valueOf(end - begin) + "ms.");
+		System.out.println("æ‰§è¡Œç”¨æ—¶ï¼š" + String.valueOf(end - begin) + "ms.");
 		System.out.println("===============");
 	}
 	

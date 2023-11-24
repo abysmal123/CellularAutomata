@@ -7,7 +7,7 @@ import javax.tools.Tool;
 
 public final class injectivityCircleCount {     // d >= 3
 
-    // Í³¼Æ»·£¨¹æÔò£¬×ó°ë¾¶£¬ÓÒ°ë¾¶£¬Ï¸°ûÊı£¬ÒÆÎ»ÏàÍ¬ÊÇ·ñÊÓÎªÍ¬Ò»ÅäÖÃ£¬ÊÇ·ñ´òÓ¡µ½¿ØÖÆÌ¨£©,´òÓ¡»·³¤·Ö²¼ÁĞ±í£¬·µ»Ø»·³¤·Ö²¼µÄÎ»Í¼£¨bitmap£©
+    // ç»Ÿè®¡ç¯ï¼ˆè§„åˆ™ï¼Œå·¦åŠå¾„ï¼Œå³åŠå¾„ï¼Œç»†èƒæ•°ï¼Œç§»ä½ç›¸åŒæ˜¯å¦è§†ä¸ºåŒä¸€é…ç½®ï¼Œæ˜¯å¦æ‰“å°åˆ°æ§åˆ¶å°ï¼‰,æ‰“å°ç¯é•¿åˆ†å¸ƒåˆ—è¡¨ï¼Œè¿”å›ç¯é•¿åˆ†å¸ƒçš„ä½å›¾ï¼ˆbitmapï¼‰
     public static long showCircleList(String r, int lr, int rr, int n, boolean shiftingAsOne, boolean show) {
         int d = lr + rr + 1;
         boolean[] rule = Tools.getRule(r);
@@ -63,7 +63,7 @@ public final class injectivityCircleCount {     // d >= 3
         return loopBitMap;
     }
 
-    // ´òÓ¡ÌØ¶¨³¤¶ÈµÄ»·£¨¹æÔò£¬×ó°ë¾¶£¬ÓÒ°ë¾¶£¬Ï¸°ûÊı£¬ÒÆÎ»ÏàÍ¬ÊÇ·ñÊÓÎªÍ¬Ò»ÅäÖÃ£¬»·³¤¶È£¬ÆğÊ¼ĞòºÅ£¬Ä©Î²ĞòºÅ£©
+    // æ‰“å°ç‰¹å®šé•¿åº¦çš„ç¯ï¼ˆè§„åˆ™ï¼Œå·¦åŠå¾„ï¼Œå³åŠå¾„ï¼Œç»†èƒæ•°ï¼Œç§»ä½ç›¸åŒæ˜¯å¦è§†ä¸ºåŒä¸€é…ç½®ï¼Œç¯é•¿åº¦ï¼Œèµ·å§‹åºå·ï¼Œæœ«å°¾åºå·ï¼‰
     public static void showCircleWithLength(String r, int lr, int rr, int n, boolean shiftingAsOne, int lengthForPrint, int startNum, int endNum) {
         int d = lr + rr + 1;
         boolean[] rule = Tools.getRule(r);
@@ -128,7 +128,7 @@ public final class injectivityCircleCount {     // d >= 3
         }
     }
 
-    // ´òÓ¡ÌØ¶¨ÅäÖÃËù´¦µÄ»·£¨¹æÔò£¬×ó°ë¾¶£¬ÓÒ°ë¾¶£¬ÅäÖÃ£¬ÒÆÎ»ÏàÍ¬ÊÇ·ñÊÓÎªÍ¬Ò»ÅäÖÃ£©
+    // æ‰“å°ç‰¹å®šé…ç½®æ‰€å¤„çš„ç¯ï¼ˆè§„åˆ™ï¼Œå·¦åŠå¾„ï¼Œå³åŠå¾„ï¼Œé…ç½®ï¼Œç§»ä½ç›¸åŒæ˜¯å¦è§†ä¸ºåŒä¸€é…ç½®ï¼‰
     public static void showConfigInCircle(String r, int lr, int rr, String c, boolean shiftingAsOne) {
         int d = lr + rr + 1;
         int n = c.length();
@@ -182,7 +182,7 @@ public final class injectivityCircleCount {     // d >= 3
         System.out.println("-------------------------------");
     }
 
-    // ×ª»»»·³¤·Ö²¼Î»Í¼ÎªÔª×éµÄ×Ö·û´®±íÊ¾
+    // è½¬æ¢ç¯é•¿åˆ†å¸ƒä½å›¾ä¸ºå…ƒç»„çš„å­—ç¬¦ä¸²è¡¨ç¤º
     public static String circleBitMapToTupleString(long circleBitMap) {
         StringBuffer buffer = new StringBuffer("(");
         int i = 1;
@@ -198,7 +198,7 @@ public final class injectivityCircleCount {     // d >= 3
         return buffer.toString();
     }
 
-    // ÕÒµ½¶à¶ÔÒ»µÄÅäÖÃ£¨¹æÔò£¬×ó°ë¾¶£¬ÓÒ°ë¾¶£¬Ï¸°û¸öÊı£¬´òÓ¡ÆğÊ¼±àºÅ£¬´òÓ¡ÖÕÖ¹±àºÅ£©
+    // æ‰¾åˆ°å¤šå¯¹ä¸€çš„é…ç½®ï¼ˆè§„åˆ™ï¼Œå·¦åŠå¾„ï¼Œå³åŠå¾„ï¼Œç»†èƒä¸ªæ•°ï¼Œæ‰“å°èµ·å§‹ç¼–å·ï¼Œæ‰“å°ç»ˆæ­¢ç¼–å·ï¼‰
     public static Map<Integer, List<Integer>> findManyForOne(String r, int lr, int rr, int n, int startNum, int endNum) {
         int d = lr + rr + 1;
         boolean[] rule = Tools.getRule(r);
@@ -268,7 +268,7 @@ public final class injectivityCircleCount {     // d >= 3
     }
 
     public static String getArrow(int len) {
-        return " ".repeat(Math.max(0, len / 2)) + "¡ı";
+        return " ".repeat(Math.max(0, len / 2)) + "â†“";
     }
 
 }

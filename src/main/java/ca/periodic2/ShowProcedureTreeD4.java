@@ -67,7 +67,7 @@ public final class ShowProcedureTreeD4 {
 		processList.offer(root);
 		edges.put(root, new ValueSet[]{new ValueSet(8), new ValueSet(8)});
 		
-		// ´´½¨rootÍ¼½Úµã
+		// åˆ›å»ºrootå›¾èŠ‚ç‚¹
 		MutableNode rootNode = mutNode((count++) + "");
 		StringBuffer buffer = new StringBuffer();
 		for (int k = 0; k < 8; k++) {
@@ -141,7 +141,7 @@ public final class ShowProcedureTreeD4 {
 	private static int getRule(String r, int len) {
 		
 		if (r.length() != len) {
-			throw new IllegalArgumentException("¹æÔò³¤¶È±ØÐëÎª" + len + "¡£ "
+			throw new IllegalArgumentException("è§„åˆ™é•¿åº¦å¿…é¡»ä¸º" + len + "ã€‚ "
 					+ "Length of input rule must be " + len + ". Input rule: " + r);
 		}
 		int rule = 0;
@@ -150,7 +150,7 @@ public final class ShowProcedureTreeD4 {
 			if (r.charAt(i) == '1') {
 				rule |= 1;
 			} else if (r.charAt(i) != '0') {
-				throw new IllegalArgumentException("¹æÔò±ØÐëÎª01´®¡£"
+				throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 						+ "Input rule must be binary. Input rule: " + r);
 			}
 		}

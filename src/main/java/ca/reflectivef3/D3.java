@@ -1,5 +1,5 @@
 /* 
- * 		F3Óò¡¢Ö±¾¶3¡¢Áã±ß½ç¿ÉÄæĞÔ
+ * 		F3åŸŸã€ç›´å¾„3ã€é›¶è¾¹ç•Œå¯é€†æ€§
  *  
  *  */
 package ca.reflectivef3;
@@ -15,7 +15,7 @@ public final class D3 {
 	public static int threshold = 0;
 	
 // public:
-	public static void initializeRule(final String r) {		// ÓÉ¹æÔò¹¹ÔìÍ¼
+	public static void initializeRule(final String r) {		// ç”±è§„åˆ™æ„é€ å›¾
 		RULE = getRule(r);
 		edges = new HashMap<>();
 		edens = new HashSet<>();
@@ -48,9 +48,9 @@ public final class D3 {
 		}
 	}
 	
-	public static boolean[] reversibilityBefore(int n) throws Exception {	// Ç°n²ãÃ¿²ãµÄ¿ÉÄæĞÔ
+	public static boolean[] reversibilityBefore(int n) throws Exception {	// å‰nå±‚æ¯å±‚çš„å¯é€†æ€§
 		if (edges == null) {
-			throw new Exception("Î´³õÊ¼»¯¹æÔò¡£ Rule uninitialized.");
+			throw new Exception("æœªåˆå§‹åŒ–è§„åˆ™ã€‚ Rule uninitialized.");
 		}
 		boolean[] ret = new boolean[n + 1];
 		Arrays.fill(ret, true);
@@ -85,10 +85,10 @@ public final class D3 {
 		return ret;
 	}
 
-	public static int getPeriod() throws Exception {		// ¼ÆËã½ÚµãÔÚ²ãÖĞ³öÏÖ¹æÂÉµÄÖÜÆÚ
+	public static int getPeriod() throws Exception {		// è®¡ç®—èŠ‚ç‚¹åœ¨å±‚ä¸­å‡ºç°è§„å¾‹çš„å‘¨æœŸ
 
 		if (edges == null) {
-			throw new Exception("Î´³õÊ¼»¯¹æÔò¡£ Rule uninitialized.");
+			throw new Exception("æœªåˆå§‹åŒ–è§„åˆ™ã€‚ Rule uninitialized.");
 		}
 		Map<String, Integer> condMap = new HashMap<>();
 		boolean[][] dp = new boolean[2][512];
@@ -114,13 +114,13 @@ public final class D3 {
 	
 	public static int[] getRule(String r) {
 		if (r.length() != 27) {
-			throw new IllegalArgumentException("¹æÔò³¤¶È±ØĞëÎª27¡£ ÊäÈë³¤¶È£º" + r.length());
+			throw new IllegalArgumentException("è§„åˆ™é•¿åº¦å¿…é¡»ä¸º27ã€‚ è¾“å…¥é•¿åº¦ï¼š" + r.length());
 		}
 		int[] rule = new int[27];
 		for (int i = 0; i < 27; i++) {
 			int b = r.charAt(26 - i) - '0';
 			if (b < 0 || b > 2) {
-				throw new IllegalArgumentException("¹æÔò´®±ØĞë½öÓÉ012×é³É¡£");
+				throw new IllegalArgumentException("è§„åˆ™ä¸²å¿…é¡»ä»…ç”±012ç»„æˆã€‚");
 			}
 			rule[i] = b;
 		}

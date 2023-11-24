@@ -9,7 +9,7 @@ public class D3 {
     public static boolean hasIrreversibleLayer;
     public static int threshold = 0;
 
-    public static void initializeRule(final String r) {		// ÓÉ¹æÔò¹¹ÔìÍ¼
+    public static void initializeRule(final String r) {		// ç”±è§„åˆ™æ„é€ å›¾
 
         int rule = getRule(r, 1 << 3);
         edges = new HashMap<>();
@@ -43,10 +43,10 @@ public class D3 {
         }
     }
 
-    public static boolean[] reversibilityBefore(int n) throws Exception {	// Ç°n²ãÃ¿²ãµÄ¿ÉÄæĞÔ
+    public static boolean[] reversibilityBefore(int n) throws Exception {	// å‰nå±‚æ¯å±‚çš„å¯é€†æ€§
 
         if (edges == null) {
-            throw new Exception("Î´³õÊ¼»¯¹æÔò¡£ Rule uninitialized.");
+            throw new Exception("æœªåˆå§‹åŒ–è§„åˆ™ã€‚ Rule uninitialized.");
         }
         boolean[] ret = new boolean[n + 1];
         Arrays.fill(ret, true);
@@ -81,10 +81,10 @@ public class D3 {
         return ret;
     }
 
-    public static int getPeriod() throws Exception {		// ¼ÆËã½ÚµãÔÚ²ãÖĞ³öÏÖ¹æÂÉµÄÖÜÆÚ
+    public static int getPeriod() throws Exception {		// è®¡ç®—èŠ‚ç‚¹åœ¨å±‚ä¸­å‡ºç°è§„å¾‹çš„å‘¨æœŸ
 
         if (edges == null) {
-            throw new Exception("Î´³õÊ¼»¯¹æÔò¡£ Rule uninitialized.");
+            throw new Exception("æœªåˆå§‹åŒ–è§„åˆ™ã€‚ Rule uninitialized.");
         }
         int[] condMap = new int[1 << 16];
         Arrays.fill(condMap, -1);
@@ -111,7 +111,7 @@ public class D3 {
     private static int getRule(String r, int len) {
 
         if (r.length() != len) {
-            throw new IllegalArgumentException("¹æÔò³¤¶È±ØĞëÎª" + len + "¡£ "
+            throw new IllegalArgumentException("è§„åˆ™é•¿åº¦å¿…é¡»ä¸º" + len + "ã€‚ "
                     + "Length of input rule must be " + len + ". Input rule: " + r);
         }
         int rule = 0;
@@ -120,7 +120,7 @@ public class D3 {
             if (r.charAt(i) == '1') {
                 rule |= 1;
             } else if (r.charAt(i) != '0') {
-                throw new IllegalArgumentException("¹æÔò±ØĞëÎª01´®¡£"
+                throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
                         + "Input rule must be binary. Input rule: " + r);
             }
         }

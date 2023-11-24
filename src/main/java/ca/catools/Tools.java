@@ -1,12 +1,16 @@
 package ca.catools;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public final class Tools {
 
-	// ·µ»Ø¹æÔòµÄÕûĞÍ±íÊ¾
+	// è¿”å›è§„åˆ™çš„æ•´å‹è¡¨ç¤º
 	public static long getRule(String r, int len) {
 		
 		if (r.length() != len) {
-			throw new IllegalArgumentException("¹æÔò³¤¶È±ØĞëÎª" + len + "¡£ "
+			throw new IllegalArgumentException("è§„åˆ™é•¿åº¦å¿…é¡»ä¸º" + len + "ã€‚ "
 					+ "Length of input rule must be " + len + ". Input rule: " + r);
 		}
 		long rule = 0;
@@ -15,31 +19,31 @@ public final class Tools {
 			if (r.charAt(i) == '1') {
 				rule |= 1;
 			} else if (r.charAt(i) != '0') {
-				throw new IllegalArgumentException("¹æÔò±ØĞëÎª01´®¡£"
+				throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 						+ "Input rule must be binary. Input rule: " + r);
 			}
 		}
 		return rule;
 	}
 
-	// ·µ»Ø¹æÔòµÄ²¼¶ûÊı×é±íÊ¾
+	// è¿”å›è§„åˆ™çš„å¸ƒå°”æ•°ç»„è¡¨ç¤º
 	public static boolean[] getRule(String r) {
 		int d = 0, len = r.length();
 		while (len > 1) {
 			if ((len & 1) == 1) {
-				throw new IllegalArgumentException("¹æÔò³¤¶È²»Îª2µÄÕûÊıÃİ¡£");
+				throw new IllegalArgumentException("è§„åˆ™é•¿åº¦ä¸ä¸º2çš„æ•´æ•°å¹‚ã€‚");
 			}
 			d++;
 			len >>= 1;
 		}
 		if (d < 3) {
-			throw new IllegalArgumentException("Ö±¾¶ÖÁÉÙÎª3¡£");
+			throw new IllegalArgumentException("ç›´å¾„è‡³å°‘ä¸º3ã€‚");
 		}
 		boolean[] RULE = new boolean[r.length()];
 		for (int i = r.length() - 1, j = 0; i >= 0; i--, j++) {
 			char bit = r.charAt(j);
 			if (bit != '0' && bit != '1') {
-				throw new IllegalArgumentException("¹æÔò±ØĞëÎª01´®¡£"
+				throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 						+ "Input rule must be binary. Input rule: " + r);
 			}
 			RULE[i] = bit == '1';
@@ -47,7 +51,7 @@ public final class Tools {
 		return RULE;
 	}
 
-	// ½«int×ª»»Îª¶ş½øÖÆ±íÊ¾µÄString
+	// å°†intè½¬æ¢ä¸ºäºŒè¿›åˆ¶è¡¨ç¤ºçš„String
 	public static String toNBitString(int num, int n) {
 		
 		StringBuilder sb = new StringBuilder();
@@ -58,7 +62,7 @@ public final class Tools {
 		return sb.reverse().toString();
 	}
 
-	// ½«long×ª»»Îª¶ş½øÖÆ±íÊ¾µÄString
+	// å°†longè½¬æ¢ä¸ºäºŒè¿›åˆ¶è¡¨ç¤ºçš„String
 	public static String toNBitString(long num, int n) {
 
 		StringBuilder sb = new StringBuilder();
@@ -69,7 +73,7 @@ public final class Tools {
 		return sb.reverse().toString();
 	}
 
-	// ½«¶ş½øÖÆ±íÊ¾µÄString×ª»»Îªint
+	// å°†äºŒè¿›åˆ¶è¡¨ç¤ºçš„Stringè½¬æ¢ä¸ºint
 	public static int toInteger(String binary) {
 
 		int dec = 0, n = binary.length();
@@ -78,10 +82,20 @@ public final class Tools {
 			if (binary.charAt(i) == '1') {
 				dec |= 1;
 			} else if (binary.charAt(i) != '0') {
-				throw new IllegalArgumentException("±ØĞëÎª01´®¡£"
+				throw new IllegalArgumentException("å¿…é¡»ä¸º01ä¸²ã€‚"
 						+ "Must be binary. Input: " + binary);
 			}
 		}
 		return dec;
+	}
+
+	// è¿”å›æ§åˆ¶å°æ—¥å¿—è®°å½•å™¨
+	public static Logger getConsoleLogger() {
+		return LoggerFactory.getLogger("consoleLogger");
+	}
+
+	// è¿”å›è¾“å‡º.logæ–‡ä»¶æ—¥å¿—è®°å½•å™¨
+	public static Logger getFileLogger() {
+		return LoggerFactory.getLogger("fileLogger");
 	}
 }

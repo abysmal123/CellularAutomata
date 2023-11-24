@@ -3,16 +3,16 @@ package ca.longbinary;
 public class LongBinary {
 	
 // public:
-	public final int len;		// ¶ş½øÖÆ´®³¤¶È
+	public final int len;		// äºŒè¿›åˆ¶ä¸²é•¿åº¦
 	
-	public final int[] blocks;	// ¶ş½øÖÆ´®·Ö¿é
+	public final int[] blocks;	// äºŒè¿›åˆ¶ä¸²åˆ†å—
 	
-	public final int n;			// ·Ö¿é¸öÊı
+	public final int n;			// åˆ†å—ä¸ªæ•°
 	
 	public LongBinary(int len) {
 		
 		if (len < 1) {
-			throw new IllegalArgumentException("³¤¶ÈÖÁÉÙÎª1¡£");
+			throw new IllegalArgumentException("é•¿åº¦è‡³å°‘ä¸º1ã€‚");
 		}
 		this.len = len;
 		n = len / 32 + (len % 32 == 0 ? 0 : 1);
@@ -22,12 +22,12 @@ public class LongBinary {
 	public LongBinary(int len, int[] blocks) {
 		
 		if (len < 1) {
-			throw new IllegalArgumentException("³¤¶ÈÖÁÉÙÎª1¡£");
+			throw new IllegalArgumentException("é•¿åº¦è‡³å°‘ä¸º1ã€‚");
 		}
 		this.len = len;
 		n = len / 32 + (len % 32 == 0 ? 0 : 1);
 		if (n != blocks.length) {
-			throw new IllegalArgumentException("·Ö¿é´óĞ¡Óë³¤¶È²»Æ¥Åä¡£");
+			throw new IllegalArgumentException("åˆ†å—å¤§å°ä¸é•¿åº¦ä¸åŒ¹é…ã€‚");
 		}
 		this.blocks = new int[n];
 		for (int i = 0; i < n; i++) {
@@ -49,7 +49,7 @@ public class LongBinary {
 		
 		len = s.length();
 		if (len < 1) {
-			throw new IllegalArgumentException("³¤¶ÈÖÁÉÙÎª1¡£");
+			throw new IllegalArgumentException("é•¿åº¦è‡³å°‘ä¸º1ã€‚");
 		}
 		n = len / 32 + (len % 32 == 0 ? 0 : 1);
 		this.blocks = new int[n];
@@ -64,12 +64,12 @@ public class LongBinary {
 		}
 	}
 	
-	public int getPos(int i) {			// ·µ»ØË÷Òıi´¦µÄÖµ
+	public int getPos(int i) {			// è¿”å›ç´¢å¼•iå¤„çš„å€¼
 		
 		return (blocks[n - 1 - i / 32] >> (i % 32)) & 1;
 	}
 	
-	public void setPos(int i, int value) {			// ÉèÖÃË÷Òıi´¦µÄÖµÎªvalue
+	public void setPos(int i, int value) {			// è®¾ç½®ç´¢å¼•iå¤„çš„å€¼ä¸ºvalue
 		
 		value &= 1;
 		if (value == 1) {
@@ -79,7 +79,7 @@ public class LongBinary {
 		}
 	}
 	
-	public static LongBinary bAND(LongBinary lb1, LongBinary lb2) {		// °´Î»ÓëÔËËã
+	public static LongBinary bAND(LongBinary lb1, LongBinary lb2) {		// æŒ‰ä½ä¸è¿ç®—
 		
 		if (lb1.len < lb2.len) {
 			LongBinary temp = lb1;
@@ -97,7 +97,7 @@ public class LongBinary {
 		return res;
 	}
 	
-	public static LongBinary bOR(LongBinary lb1, LongBinary lb2) {		// °´Î»»òÔËËã
+	public static LongBinary bOR(LongBinary lb1, LongBinary lb2) {		// æŒ‰ä½æˆ–è¿ç®—
 		
 		if (lb1.len < lb2.len) {
 			LongBinary temp = lb1;
@@ -112,7 +112,7 @@ public class LongBinary {
 		return res;
 	}
 	
-	public static LongBinary bXOR(LongBinary lb1, LongBinary lb2) {		// °´Î»Òì»òÔËËã
+	public static LongBinary bXOR(LongBinary lb1, LongBinary lb2) {		// æŒ‰ä½å¼‚æˆ–è¿ç®—
 		
 		if (lb1.len < lb2.len) {
 			LongBinary temp = lb1;
@@ -127,7 +127,7 @@ public class LongBinary {
 		return res;
 	}
 	
-	public static LongBinary bNOT(LongBinary lb) {			// °´Î»·ÇÔËËã
+	public static LongBinary bNOT(LongBinary lb) {			// æŒ‰ä½éè¿ç®—
 		
 		LongBinary res = new LongBinary(lb);
 		int n = lb.n;
@@ -143,7 +143,7 @@ public class LongBinary {
 		return res;
 	}
 	
-	public static LongBinary SHL(LongBinary lb, int k) {		// Âß¼­×óÒÆÔËËã
+	public static LongBinary SHL(LongBinary lb, int k) {		// é€»è¾‘å·¦ç§»è¿ç®—
 		
 		if (k >= lb.len) {
 			return new LongBinary(lb.len);
@@ -156,7 +156,7 @@ public class LongBinary {
 		return new LongBinary(buffer.toString());
 	}
 	
-	public static LongBinary SHR(LongBinary lb, int k) {		// Âß¼­ÓÒÒÆÔËËã
+	public static LongBinary SHR(LongBinary lb, int k) {		// é€»è¾‘å³ç§»è¿ç®—
 		
 		if (k >= lb.len) {
 			return new LongBinary(lb.len);

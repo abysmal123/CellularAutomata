@@ -23,10 +23,10 @@ public final class GlobalInjectivityDn {		// d >= 6
 		
 		int wolframLen = (1 << d);
 		if (r.length() != wolframLen) {
-			throw new IllegalArgumentException("¹æÔò³¤¶È´íÎó ¡£");
+			throw new IllegalArgumentException("è§„åˆ™é•¿åº¦é”™è¯¯ ã€‚");
 		}
 		if (r.charAt(0) != '0' && r.charAt(0) != '1') {
-			throw new IllegalArgumentException("¹æÔò±ØĞëÎª01´®¡£"
+			throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 					+ "Input rules must be binary. Input rules: " + r);
 		}
 		LongBinary rules = new LongBinary(wolframLen);
@@ -34,7 +34,7 @@ public final class GlobalInjectivityDn {		// d >= 6
 			if (r.charAt(i) == '1') {
 				rules.setPos(i, 1);
 			} else if (r.charAt(i) != '0') {
-				throw new IllegalArgumentException("¹æÔò±ØĞëÎª01´®¡£"
+				throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 						+ "Input rules must be binary. Input rules: " + r);
 			}
 		}
@@ -58,12 +58,12 @@ public final class GlobalInjectivityDn {		// d >= 6
 			for (int j = i + 1; j < numToZero; j++) {
 				BoxDn box = new BoxDn(d, toZero.get(i), toZero.get(j), rules, map);
 				if (box.sequentSet.contains(box)) {
-//					System.out.println("("+box.n1+", "+box.n2+")³öÏÖ×Ô°üº¬");
+//					System.out.println("("+box.n1+", "+box.n2+")å‡ºç°è‡ªåŒ…å«");
 					return false;
 				}
 				if (box.sequentSet.isEmpty()) {
 					crossOutList.offer(box);
-//					System.out.println("½«("+box.n1+", "+box.n2+")¼ÓÈë´ı´¦Àícross outÁĞ±í. Ê£Óà´ı´¦Àí£º"+crossOutList.size());
+//					System.out.println("å°†("+box.n1+", "+box.n2+")åŠ å…¥å¾…å¤„ç†cross outåˆ—è¡¨. å‰©ä½™å¾…å¤„ç†ï¼š"+crossOutList.size());
 				} else {
 					in.add(box);
 				}
@@ -73,12 +73,12 @@ public final class GlobalInjectivityDn {		// d >= 6
 			for (int j = i + 1; j < numToOne; j++) {
 				BoxDn box = new BoxDn(d, toOne.get(i), toOne.get(j), rules, map);
 				if (box.sequentSet.contains(box)) {
-//					System.out.println("("+box.n1+", "+box.n2+")³öÏÖ×Ô°üº¬");
+//					System.out.println("("+box.n1+", "+box.n2+")å‡ºç°è‡ªåŒ…å«");
 					return false;
 				}
 				if (box.sequentSet.isEmpty()) {
 					crossOutList.offer(box);
-//					System.out.println("½«("+box.n1+", "+box.n2+")¼ÓÈë´ı´¦Àícross outÁĞ±í. Ê£Óà´ı´¦Àí£º"+crossOutList.size());
+//					System.out.println("å°†("+box.n1+", "+box.n2+")åŠ å…¥å¾…å¤„ç†cross outåˆ—è¡¨. å‰©ä½™å¾…å¤„ç†ï¼š"+crossOutList.size());
 				} else {
 					in.add(box);
 				}
@@ -87,17 +87,17 @@ public final class GlobalInjectivityDn {		// d >= 6
 		// Step4:
 		while (!crossOutList.isEmpty()) {
 			BoxDn curr = crossOutList.poll();
-//			System.out.println("½«("+curr.n1+", "+curr.n2+")ÒÆ³ö´ı´¦Àícross outÁĞ±í. Ê£Óà´ı´¦Àí£º"+crossOutList.size());
+//			System.out.println("å°†("+curr.n1+", "+curr.n2+")ç§»å‡ºå¾…å¤„ç†cross outåˆ—è¡¨. å‰©ä½™å¾…å¤„ç†ï¼š"+crossOutList.size());
 			if (map.get(curr) == null) {
 				continue;
 			}
 			for (BoxDn b : map.get(curr)) {
 				b.sequentSet.remove(curr);
-//				System.out.println("´Ó("+b.n1+", "+b.n2+")µÄsequent setÖĞÒÆ³ı("+curr.n1+", "+curr.n2+").");
+//				System.out.println("ä»("+b.n1+", "+b.n2+")çš„sequent setä¸­ç§»é™¤("+curr.n1+", "+curr.n2+").");
 				if (b.sequentSet.isEmpty()) {
 					in.remove(b);
 					crossOutList.offer(b);
-//					System.out.println("½«("+b.n1+", "+b.n2+")¼ÓÈë´ı´¦Àícross outÁĞ±í. Ê£Óà´ı´¦Àí£º"+crossOutList.size());
+//					System.out.println("å°†("+b.n1+", "+b.n2+")åŠ å…¥å¾…å¤„ç†cross outåˆ—è¡¨. å‰©ä½™å¾…å¤„ç†ï¼š"+crossOutList.size());
 				}
 			}
 		}
@@ -107,7 +107,7 @@ public final class GlobalInjectivityDn {		// d >= 6
 			weights.put(new BoxDn(d, i, i), 0);
 		}
 		Set<BoxDn> assignedBox = new HashSet<BoxDn>();
-//		System.out.println("Ê£ÓàboxÊı£º"+in.size());
+//		System.out.println("å‰©ä½™boxæ•°ï¼š"+in.size());
 		int lastSize = in.size() + 1;
 		while (in.size() < lastSize) {
 			lastSize = in.size();
@@ -130,7 +130,7 @@ public final class GlobalInjectivityDn {		// d >= 6
 					assignedBox.add(b);
 				}
 			}
-//			System.out.println("Ê£Óà´ÎÊı£º"+in.size());
+//			System.out.println("å‰©ä½™æ¬¡æ•°ï¼š"+in.size());
 		}
 		if (!in.isEmpty()) {
 			return false;
@@ -155,9 +155,9 @@ public final class GlobalInjectivityDn {		// d >= 6
 				System.out.println(r);
 			}
 		}
-		System.out.println("×Ü¼Æ" + cases.length + "Ìõ¹æÔò£¬ÆäÖĞ" + count + "Ìõµ¥Éä¹æÔò£¬" + (cases.length - count) + "Ìõ·Çµ¥Éä¹æÔò");
+		System.out.println("æ€»è®¡" + cases.length + "æ¡è§„åˆ™ï¼Œå…¶ä¸­" + count + "æ¡å•å°„è§„åˆ™ï¼Œ" + (cases.length - count) + "æ¡éå•å°„è§„åˆ™");
 		long end = System.currentTimeMillis();
-		System.out.println("Ö´ĞĞÓÃÊ±£º" + String.valueOf(end - begin) + "ms.");
+		System.out.println("æ‰§è¡Œç”¨æ—¶ï¼š" + String.valueOf(end - begin) + "ms.");
 	}
 	
 	public static void printInjectiveRules() {
@@ -168,9 +168,9 @@ public final class GlobalInjectivityDn {		// d >= 6
 		Arrays.fill(rulesCharArr, '0');
 		rulesCharArr[0] = '1';
 		dfs(1, 1);
-		System.out.println("×Ü¼Æ" + count + "Ìõ¹æÔò");
+		System.out.println("æ€»è®¡" + count + "æ¡è§„åˆ™");
 		long end = System.currentTimeMillis();
-		System.out.println("Ö´ĞĞÓÃÊ±£º" + String.valueOf(end - begin) + "ms.");
+		System.out.println("æ‰§è¡Œç”¨æ—¶ï¼š" + String.valueOf(end - begin) + "ms.");
 	}
 	
 // private:

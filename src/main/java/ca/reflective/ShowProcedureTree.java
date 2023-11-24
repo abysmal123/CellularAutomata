@@ -17,9 +17,9 @@ public final class ShowProcedureTree {
 
     public static void storeImage(String r, int d, String fileName) throws IOException {
         if (r.length() != 1 << d) {
-            throw new IllegalArgumentException("¹æÔò³¤¶ÈÓëÉè¶¨µÄÖ±¾¶²»·û¡£");
+            throw new IllegalArgumentException("è§„åˆ™é•¿åº¦ä¸Žè®¾å®šçš„ç›´å¾„ä¸ç¬¦ã€‚");
         }
-        if ((d & 1) == 0) {         // Å¼ÊýÖ±¾¶ÏòÉÏ×ª»¯ÎªÆæÊýÖ±¾¶
+        if ((d & 1) == 0) {         // å¶æ•°ç›´å¾„å‘ä¸Šè½¬åŒ–ä¸ºå¥‡æ•°ç›´å¾„
             storeImage(r + r, d + 1, fileName);
         } else {
             diameter = d;
@@ -32,13 +32,13 @@ public final class ShowProcedureTree {
         int d = 0, len = r.length();
         while (len > 1) {
             if ((len & 1) == 1) {
-                throw new IllegalArgumentException("¹æÔò³¤¶È²»Îª2µÄÕûÊýÃÝ¡£");
+                throw new IllegalArgumentException("è§„åˆ™é•¿åº¦ä¸ä¸º2çš„æ•´æ•°å¹‚ã€‚");
             }
             d++;
             len >>= 1;
         }
         if (d < 3) {
-            throw new IllegalArgumentException("Ö±¾¶ÖÁÉÙÎª3¡£");
+            throw new IllegalArgumentException("ç›´å¾„è‡³å°‘ä¸º3ã€‚");
         }
         storeImage(r, d, fileName);
     }

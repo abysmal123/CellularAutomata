@@ -68,7 +68,7 @@ public final class ShowLayerGraphD3 {
 		processList.offer(root);
 		edges.put(root, new int[3]);
 		
-		// ´´½¨rootÍ¼½Úµã
+		// åˆ›å»ºrootå›¾èŠ‚ç‚¹
 		MutableNode rootNode = mutNode((count++) + "");
 		rootNode.add(Shape.RECTANGLE, Style.ROUNDED, Label.html(0 + ""));
 		
@@ -115,13 +115,13 @@ public final class ShowLayerGraphD3 {
 	
 	public static int[] getRule(String r) {
 		if (r.length() != 27) {
-			throw new IllegalArgumentException("¹æÔò³¤¶È±ØĞëÎª27¡£ ÊäÈë³¤¶È£º" + r.length());
+			throw new IllegalArgumentException("è§„åˆ™é•¿åº¦å¿…é¡»ä¸º27ã€‚ è¾“å…¥é•¿åº¦ï¼š" + r.length());
 		}
 		int[] rule = new int[27];
 		for (int i = 0; i < 27; i++) {
 			int b = r.charAt(26 - i) - '0';
 			if (b < 0 || b > 2) {
-				throw new IllegalArgumentException("¹æÔò´®±ØĞë½öÓÉ012×é³É¡£");
+				throw new IllegalArgumentException("è§„åˆ™ä¸²å¿…é¡»ä»…ç”±012ç»„æˆã€‚");
 			}
 			rule[i] = b;
 		}

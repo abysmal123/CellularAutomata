@@ -5,7 +5,7 @@ import java.util.List;
 
 public class GlobalInjectivity {
 	
-	public GlobalInjectivity(int m) {	// Ö±¾¶Îª m
+	public GlobalInjectivity(int m) {	// ç›´å¾„ä¸º m
 		
 		this.m = m;
 		initialize();
@@ -69,7 +69,7 @@ public class GlobalInjectivity {
 				};
 			}
 			long end = System.currentTimeMillis();
-			System.out.println("Ö´ÐÐÓÃÊ±£º" + String.valueOf(end - begin) + "ms.");
+			System.out.println("æ‰§è¡Œç”¨æ—¶ï¼š" + String.valueOf(end - begin) + "ms.");
 		}
 		for (long rule : injectiveRules) {
 			System.out.println(toStringRule(rule));

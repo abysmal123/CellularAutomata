@@ -21,7 +21,7 @@ public final class RuleGenerator {
 
 	public static String linearRule(int i, int j, int k, int a) {
 		if (i < 0|| j < 0 || k < 0 || a < 0 || i > 2 || j > 2 || k > 2 || a > 2) {
-			throw new IllegalArgumentException("ËùÓĞ²ÎÊıÈ¡Öµ·¶Î§¾ùÎª{0, 1, 2}¡£ "
+			throw new IllegalArgumentException("æ‰€æœ‰å‚æ•°å–å€¼èŒƒå›´å‡ä¸º{0, 1, 2}ã€‚ "
 					+ "All arguments must be valued in {0, 1, 2}. ");
 		}
 		StringBuilder sb = new StringBuilder();

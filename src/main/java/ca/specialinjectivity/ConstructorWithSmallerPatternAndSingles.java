@@ -7,20 +7,20 @@ import java.util.Set;
 import ca.injectivity2.GlobalInjectivityDn;
 import ca.catools.Tools;
 
-// Ê¹ÓÃÖ±¾¶Ğ¡ÓÚ6µÄpatternºÍÈô¸É¸öÖ±¾¶6µÄ¡°µ¥¶À·´×ª¡±¹¹ÔìÖ±¾¶6µÄµ¥Éä¹æÔò
+// Ê¹ï¿½ï¿½Ö±ï¿½ï¿½Ğ¡ï¿½ï¿½6ï¿½ï¿½patternï¿½ï¿½ï¿½ï¿½ï¿½É¸ï¿½Ö±ï¿½ï¿½6ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½6ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 public final class ConstructorWithSmallerPatternAndSingles {
 
-    // pattern×óÌí¼ÓÒ»¸öÈÎÒâÎ»
+    // patternï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»
     public static String leftWrap(String pattern) {
         return "c" + pattern;
     }
 
-    // patternÓÒÌí¼ÓÒ»¸öÈÎÒâÎ»
+    // patternï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»
     public static String rightWrap(String pattern) {
         return pattern + "c";
     }
 
-    // ·µ»ØËùÓĞÔÚpatternÖĞ±ä»¯µÄÎ»µÄÊ®½øÖÆ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½patternï¿½Ğ±ä»¯ï¿½ï¿½Î»ï¿½ï¿½Ê®ï¿½ï¿½ï¿½ï¿½
     public static List<Integer> changedBitsIdx(String pattern) {
         List<Integer> ret = new ArrayList<>();
         StringBuffer buffer = new StringBuffer();
@@ -28,7 +28,7 @@ public final class ConstructorWithSmallerPatternAndSingles {
         return ret;
     }
 
-    // ±»changedBits()µ÷ÓÃ£¬»ØËİÉú³ÉËùÓĞ±ä»¯µÄÎ»
+    // ï¿½ï¿½changedBits()ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ±ä»¯ï¿½ï¿½Î»
     private static void dfs(String pattern, StringBuffer buffer, int pos, List<Integer> ret) {
         if (pos == pattern.length()) {
             ret.add(Tools.toInteger(buffer.toString()));
@@ -46,7 +46,7 @@ public final class ConstructorWithSmallerPatternAndSingles {
         buffer.deleteCharAt(buffer.length() - 1);
     }
 
-    // Ê¹ÓÃÒ»¸öÖ±¾¶5µÄpatternºÍÁ½¸öÖ±¾¶6µÄ¡°µ¥¶À·´×ª¡±¹¹Ôì
+    // Ê¹ï¿½ï¿½Ò»ï¿½ï¿½Ö±ï¿½ï¿½5ï¿½ï¿½patternï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½ï¿½6ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public static List<String[]> injectiveRulesWithPattern(String pattern) {
 
         int d = 6;

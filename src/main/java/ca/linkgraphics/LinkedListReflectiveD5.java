@@ -32,11 +32,11 @@ public final class LinkedListReflectiveD5 {
     }
 
 // private:
-    private static String PATH = "graph/";                      // Í¼Æ¬´æ´¢Â·¾¶
-    private static String r;                                    // µ±Ç°¹æÔò
-    private static Map<Integer, int[]> edges;                   // ¹æÔòÍ¼
-    private static int nodeCnt;                                 // ¹©¹¹Í¼Ê¹ÓÃ£¬½Úµã±àºÅ
-    private static Map<Integer, MutableNode> nodeTable;         // ½Úµã¹şÏ£ÖµºÍ½Úµã¶ÔÏóµÄ¶ÔÓ¦±í
+    private static String PATH = "graph/";                      // å›¾ç‰‡å­˜å‚¨è·¯å¾„
+    private static String r;                                    // å½“å‰è§„åˆ™
+    private static Map<Integer, int[]> edges;                   // è§„åˆ™å›¾
+    private static int nodeCnt;                                 // ä¾›æ„å›¾ä½¿ç”¨ï¼ŒèŠ‚ç‚¹ç¼–å·
+    private static Map<Integer, MutableNode> nodeTable;         // èŠ‚ç‚¹å“ˆå¸Œå€¼å’ŒèŠ‚ç‚¹å¯¹è±¡çš„å¯¹åº”è¡¨
 
     private static MutableGraph toLinkedList() {
 
@@ -46,7 +46,7 @@ public final class LinkedListReflectiveD5 {
         return graph;
     }
 
-    private static void initializeRule(final String _r) {		// ÓÉ¹æÔò¹¹ÔìÍ¼
+    private static void initializeRule(final String _r) {		// ç”±è§„åˆ™æ„é€ å›¾
 
         r = _r;
         int[] RULE = getRule(r);
@@ -130,13 +130,13 @@ public final class LinkedListReflectiveD5 {
 
     private static int[] getRule(String r) {
         if (r.length() != 32) {
-            throw new IllegalArgumentException("¹æÔò³¤¶È±ØĞëÎª32¡£ ÊäÈë³¤¶È£º" + r.length());
+            throw new IllegalArgumentException("è§„åˆ™é•¿åº¦å¿…é¡»ä¸º32ã€‚ è¾“å…¥é•¿åº¦ï¼š" + r.length());
         }
         int[] rule = new int[32];
         for (int i = 0; i < 32; i++) {
             int b = r.charAt(31 - i) - '0';
             if (b < 0 || b > 1) {
-                throw new IllegalArgumentException("¹æÔò´®±ØĞë½öÓÉ01×é³É¡£");
+                throw new IllegalArgumentException("è§„åˆ™ä¸²å¿…é¡»ä»…ç”±01ç»„æˆã€‚");
             }
             rule[i] = b;
         }

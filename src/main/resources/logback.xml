@@ -1,0 +1,33 @@
+<configuration  xmlns="http://ch.qos.logback/xml/ns/logback"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://ch.qos.logback/xml/ns/logback
+                https://raw.githubusercontent.com/enricopulatzo/logback-XSD/master/src/main/xsd/logback.xsd">
+
+    <logger name="consoleLogger">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <logger name="fileLogger">
+        <appender-ref ref="FILE"/>
+    </logger>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <target>System.out</target>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd hh:mm:ss.SSS} [%-5level]  %C [%thread] : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/report.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd hh:mm:ss.SSS} [%-5level]  %C [%thread] : %msg%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>log/log%d{yyyy_MM_dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <append>true</append>
+    </appender>
+</configuration>
+
+

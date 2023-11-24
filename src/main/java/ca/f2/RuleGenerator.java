@@ -28,7 +28,7 @@ public final class RuleGenerator {
 		int mask = 0;
 		for (int coefficient : coefficients) {
 			if (coefficient > 1) {
-				throw new IllegalArgumentException("ËùÓĞ²ÎÊıÈ¡Öµ·¶Î§¾ùÎª{0, 1}¡£ "
+				throw new IllegalArgumentException("æ‰€æœ‰å‚æ•°å–å€¼èŒƒå›´å‡ä¸º{0, 1}ã€‚ "
 						+ "All arguments must be valued in {0, 1}. ");
 			}
 			mask <<= 1;

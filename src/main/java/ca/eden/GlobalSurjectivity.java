@@ -11,11 +11,11 @@ public final class GlobalSurjectivity {
 	public GlobalSurjectivity(final String r, int model) {
 		
 		if (r.length() != 8) {
-			throw new IllegalArgumentException("ECAµÄ¹æÔò³¤¶È±ØÐëÎª8 ¡£"
+			throw new IllegalArgumentException("ECAçš„è§„åˆ™é•¿åº¦å¿…é¡»ä¸º8 ã€‚"
 					+ "Length of ECA's rules must be 8. Input rules: " + r);
 		}
 		if (r.charAt(0) != '0' && r.charAt(0) != '1') {
-			throw new IllegalArgumentException("¹æÔò±ØÐëÎª01´®¡£"
+			throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 					+ "Input rules must be binary. Input rules: " + r);
 		}
 		rules = r.charAt(0) == '1' ? 1 : 0;
@@ -24,7 +24,7 @@ public final class GlobalSurjectivity {
 			if (r.charAt(i) == '1') {
 				rules++;
 			} else if (r.charAt(i) != '0') {
-				throw new IllegalArgumentException("¹æÔò±ØÐëÎª01´®¡£"
+				throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 						+ "Input rules must be binary. Input rules: " + r);
 			}
 		}
@@ -32,13 +32,13 @@ public final class GlobalSurjectivity {
 		visited[0] = true;
 		List<String> edens = new ArrayList<String>();
 		Queue<TreeNode> nodeList = new ArrayDeque<TreeNode>();
-		if (model == 0) {				// 0¸ù
+		if (model == 0) {				// 0æ ¹
 			rootNode = new TreeNode(255 - rules);
-		} else if (model == 1) {		// 1¸ù
+		} else if (model == 1) {		// 1æ ¹
 			rootNode = new TreeNode(rules);
-		} else if (model == 2) {		// 0xxµÄ¸ù
+		} else if (model == 2) {		// 0xxçš„æ ¹
 			rootNode = new TreeNode(3);
-		} else {						// È«²¿
+		} else {						// å…¨éƒ¨
 			rootNode = new TreeNode(255);
 		}
 		nodeList.add(rootNode);

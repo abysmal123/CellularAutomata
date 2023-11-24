@@ -7,7 +7,7 @@ public final class SpecialInjectivity {
 
 // public:
 
-	// ÅĞ¶ÏpatternÊÇ·ñÎªµ¥Éä¹æÔò
+	// åˆ¤æ–­patternæ˜¯å¦ä¸ºå•å°„è§„åˆ™
 	public static boolean isSpecial(final String pattern) {
 			
 		int n = pattern.length(), varPos = -1;
@@ -43,7 +43,7 @@ public final class SpecialInjectivity {
 		return true;
 	}
 
-	// ¹¹ÔìÒ»¸öpattern£¬x£¨´Ó×óµ½ÓÒµÄ£©Î»ÖÃÎªxPos£¬ÇÒ³ıÈ¥xºóµÄÊı×Ö²¿·ÖÎªnÎ»¶ş½øÖÆÊı£¬Ê®½øÖÆ±íÊ¾Îªnum
+	// æ„é€ ä¸€ä¸ªpatternï¼Œxï¼ˆä»å·¦åˆ°å³çš„ï¼‰ä½ç½®ä¸ºxPosï¼Œä¸”é™¤å»xåçš„æ•°å­—éƒ¨åˆ†ä¸ºnä½äºŒè¿›åˆ¶æ•°ï¼Œåè¿›åˆ¶è¡¨ç¤ºä¸ºnum
 	public static String toPattern(int num, int n, int xPos) {
 		
 		StringBuffer buffer = new StringBuffer();
@@ -55,7 +55,7 @@ public final class SpecialInjectivity {
 		return buffer.toString();
 	}
 
-	// °Ñpattern×ª»»Îª¶ÔÓ¦µÄwolframÊı
+	// æŠŠpatternè½¬æ¢ä¸ºå¯¹åº”çš„wolframæ•°
 	public static String patternToWolfram(String pattern) {
 		
 		int n = pattern.length();
@@ -86,7 +86,7 @@ public final class SpecialInjectivity {
 		return buffer.reverse().toString();
 	}
 
-	// ·µ»ØÒ»¸ölist£¬Æä°üº¬ËùÓĞÖ±¾¶n+1µÄµ¥ÉäÄ£Ê½, Ã¿ÌõÒÔ(wolfram, pattern)¶şÔª×é¼ÇÂ¼
+	// è¿”å›ä¸€ä¸ªlistï¼Œå…¶åŒ…å«æ‰€æœ‰ç›´å¾„n+1çš„å•å°„æ¨¡å¼, æ¯æ¡ä»¥(wolfram, pattern)äºŒå…ƒç»„è®°å½•
 	public static List<String[]> toList(int n) {
 		
 		List<String[]> ruleList = new ArrayList<>();
@@ -103,7 +103,7 @@ public final class SpecialInjectivity {
 		return ruleList;
 	}
 
-	// °ÑËùÓĞÖ±¾¶n+1µÄµ¥ÉäÄ£Ê½´òÓ¡µ½¿ØÖÆÌ¨
+	// æŠŠæ‰€æœ‰ç›´å¾„n+1çš„å•å°„æ¨¡å¼æ‰“å°åˆ°æ§åˆ¶å°
 	public static void printAll(int n) {
 		
 		int count = 0;

@@ -29,11 +29,11 @@ public final class LinkedListNullD4L1 {
     }
 
 // private:
-    private static String PATH = "graph/";                      // Í¼Æ¬´æ´¢Â·¾¶
-    private static String r;                                    // µ±Ç°¹æÔò
-    private static Map<Integer, int[]> edges;                   // ¹æÔòÍ¼
-    private static int nodeCnt;                                 // ¹©¹¹Í¼Ê¹ÓÃ£¬½Úµã±àºÅ
-    private static Map<Integer, MutableNode> nodeTable;         // ½Úµã¹şÏ£ÖµºÍ½Úµã¶ÔÏóµÄ¶ÔÓ¦±í
+    private static String PATH = "graph/";                      // å›¾ç‰‡å­˜å‚¨è·¯å¾„
+    private static String r;                                    // å½“å‰è§„åˆ™
+    private static Map<Integer, int[]> edges;                   // è§„åˆ™å›¾
+    private static int nodeCnt;                                 // ä¾›æ„å›¾ä½¿ç”¨ï¼ŒèŠ‚ç‚¹ç¼–å·
+    private static Map<Integer, MutableNode> nodeTable;         // èŠ‚ç‚¹å“ˆå¸Œå€¼å’ŒèŠ‚ç‚¹å¯¹è±¡çš„å¯¹åº”è¡¨
 
     private static MutableGraph toLinkedList() {
 
@@ -43,10 +43,10 @@ public final class LinkedListNullD4L1 {
         return graph;
     }
 
-    private static void initializeRule(final String _r) {		// ÓÉ¹æÔò¹¹ÔìÍ¼
+    private static void initializeRule(final String _r) {		// ç”±è§„åˆ™æ„é€ å›¾
 
         r = _r;
-        // µ±Ç°¹æÔò(Integer)
+        // å½“å‰è§„åˆ™(Integer)
         int rule = getRule(r);
         nodeCnt = 0;
         edges = new HashMap<>();
@@ -130,7 +130,7 @@ public final class LinkedListNullD4L1 {
     private static int getRule(String r) {
 
         if (r.length() != 16) {
-            throw new IllegalArgumentException("¹æÔò³¤¶È±ØĞëÎª16¡£ "
+            throw new IllegalArgumentException("è§„åˆ™é•¿åº¦å¿…é¡»ä¸º16ã€‚ "
                     + "Length of input rule must be 16. Input rule: " + r);
         }
         int rule = 0;
@@ -139,7 +139,7 @@ public final class LinkedListNullD4L1 {
             if (r.charAt(i) == '1') {
                 rule |= 1;
             } else if (r.charAt(i) != '0') {
-                throw new IllegalArgumentException("¹æÔò±ØĞëÎª01´®¡£"
+                throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
                         + "Input rule must be binary. Input rule: " + r);
             }
         }

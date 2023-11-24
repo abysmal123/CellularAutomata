@@ -63,7 +63,7 @@ public final class ShowProcedureTreeECA {
 		processList.offer(root);
 		edges.put(root, new int[2]);
 		
-		// ´´½¨rootÍ¼½Úµã
+		// åˆ›å»ºrootå›¾èŠ‚ç‚¹
 		MutableNode rootNode = mutNode((count++) + "");
 		StringBuffer buffer = new StringBuffer();
 		for (int i = 0; i < 4; i++) {
@@ -119,7 +119,7 @@ public final class ShowProcedureTreeECA {
 	private static int getRule(String r, int len) {
 		
 		if (r.length() != len) {
-			throw new IllegalArgumentException("¹æÔò³¤¶È±ØÐëÎª" + len + "¡£ "
+			throw new IllegalArgumentException("è§„åˆ™é•¿åº¦å¿…é¡»ä¸º" + len + "ã€‚ "
 					+ "Length of input rule must be " + len + ". Input rule: " + r);
 		}
 		int rule = 0;
@@ -128,7 +128,7 @@ public final class ShowProcedureTreeECA {
 			if (r.charAt(i) == '1') {
 				rule |= 1;
 			} else if (r.charAt(i) != '0') {
-				throw new IllegalArgumentException("¹æÔò±ØÐëÎª01´®¡£"
+				throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 						+ "Input rule must be binary. Input rule: " + r);
 			}
 		}

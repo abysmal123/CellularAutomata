@@ -26,16 +26,16 @@ public final class ShowProcedureTreeD4L1 {
 	public static void setBoundary(int left, int[] right) {
 		
 		if (right.length != 2) {
-			throw new IllegalArgumentException("ÓÒ±ß½ç³¤¶È±ØĞëÎª2¡£"
+			throw new IllegalArgumentException("å³è¾¹ç•Œé•¿åº¦å¿…é¡»ä¸º2ã€‚"
 					+ "Length of right boundary must be 2. Input length: " + right.length);
 		}
 		if(left != 0 && left != 1) {
-			throw new IllegalArgumentException("±ß½ç×´Ì¬±ØĞëÎª0»ò1 ¡£"
+			throw new IllegalArgumentException("è¾¹ç•ŒçŠ¶æ€å¿…é¡»ä¸º0æˆ–1 ã€‚"
 					+ "Boundary states must be 0 or 1.");
 		}
 		for (int e : right) {
 			if(e != 0 && e != 1) {
-				throw new IllegalArgumentException("±ß½ç×´Ì¬±ØĞëÎª0»ò1 ¡£"
+				throw new IllegalArgumentException("è¾¹ç•ŒçŠ¶æ€å¿…é¡»ä¸º0æˆ–1 ã€‚"
 						+ "Boundary states must be 0 or 1.");
 			}
 		}
@@ -97,11 +97,11 @@ public final class ShowProcedureTreeD4L1 {
 	private static void initializeTree(String r) {
 
 		if (r.length() != 16) {
-			throw new IllegalArgumentException("¹æÔò³¤¶È±ØĞëÎª16 ¡£"
+			throw new IllegalArgumentException("è§„åˆ™é•¿åº¦å¿…é¡»ä¸º16 ã€‚"
 					+ "Length of rules must be 16. Input rules: " + r);
 		}
 		if (r.charAt(0) != '0' && r.charAt(0) != '1') {
-			throw new IllegalArgumentException("¹æÔò±ØĞëÎª01´®¡£"
+			throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 					+ "Input rules must be binary. Input rules: " + r);
 		}
 		int rules = (r.charAt(0) == '1' ? 1 : 0);
@@ -110,7 +110,7 @@ public final class ShowProcedureTreeD4L1 {
 			if (r.charAt(i) == '1') {
 				rules++;
 			} else if (r.charAt(i) != '0') {
-				throw new IllegalArgumentException("¹æÔò±ØĞëÎª01´®¡£"
+				throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 						+ "Input rules must be binary. Input rules: " + r);
 			}
 		}

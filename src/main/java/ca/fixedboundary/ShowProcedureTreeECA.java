@@ -26,7 +26,7 @@ public final class ShowProcedureTreeECA {
 	public static void setBoundary(int left, int right) {
 		
 		if((left != 0 && left != 1) || (right != 0 && right != 1)) {
-			throw new IllegalArgumentException("±ß½ç×´Ì¬±ØĞëÎª0»ò1 ¡£"
+			throw new IllegalArgumentException("è¾¹ç•ŒçŠ¶æ€å¿…é¡»ä¸º0æˆ–1 ã€‚"
 					+ "Boundary states must be 0 or 1.");
 		}
 		leftBoundary = left;
@@ -80,11 +80,11 @@ public final class ShowProcedureTreeECA {
 	private static void initializeTree(String r) {
 
 		if (r.length() != 8) {
-			throw new IllegalArgumentException("¹æÔò³¤¶È±ØĞëÎª8 ¡£"
+			throw new IllegalArgumentException("è§„åˆ™é•¿åº¦å¿…é¡»ä¸º8 ã€‚"
 					+ "Length of rules must be 8. Input rules: " + r);
 		}
 		if (r.charAt(0) != '0' && r.charAt(0) != '1') {
-			throw new IllegalArgumentException("¹æÔò±ØĞëÎª01´®¡£"
+			throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 					+ "Input rules must be binary. Input rules: " + r);
 		}
 		int rules = (r.charAt(0) == '1' ? 1 : 0);
@@ -93,7 +93,7 @@ public final class ShowProcedureTreeECA {
 			if (r.charAt(i) == '1') {
 				rules++;
 			} else if (r.charAt(i) != '0') {
-				throw new IllegalArgumentException("¹æÔò±ØĞëÎª01´®¡£"
+				throw new IllegalArgumentException("è§„åˆ™å¿…é¡»ä¸º01ä¸²ã€‚"
 						+ "Input rules must be binary. Input rules: " + r);
 			}
 		}
