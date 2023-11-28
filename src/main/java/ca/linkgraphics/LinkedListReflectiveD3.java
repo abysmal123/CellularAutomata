@@ -37,7 +37,7 @@ public final class LinkedListReflectiveD3 {
 
     private static MutableGraph toLinkedList() {
 
-        MutableGraph graph = mutGraph("Null " + r).setDirected(true);
+        MutableGraph graph = mutGraph("Reflective " + r).setDirected(true);
         graph.graphAttrs().add(Label.graphName().locate(Label.Location.TOP));
         draw(graph);
         return graph;
@@ -119,6 +119,7 @@ public final class LinkedListReflectiveD3 {
             }
             g.add(sg);
             if (condMap[dp[now]] != -1) {
+                sg.graphAttrs().add(Label.html(i + "(" + condMap[dp[now]] + ")"));
                 return;
             }
             condMap[dp[now]] = i;

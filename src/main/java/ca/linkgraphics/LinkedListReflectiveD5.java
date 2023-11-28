@@ -40,7 +40,7 @@ public final class LinkedListReflectiveD5 {
 
     private static MutableGraph toLinkedList() {
 
-        MutableGraph graph = mutGraph("Null " + r).setDirected(true);
+        MutableGraph graph = mutGraph("Reflective " + r).setDirected(true);
         graph.graphAttrs().add(Label.graphName().locate(Label.Location.TOP));
         draw(graph);
         return graph;
@@ -122,6 +122,7 @@ public final class LinkedListReflectiveD5 {
             }
             g.add(sg);
             if (condMap.containsKey(cond)) {
+                sg.graphAttrs().add(Label.html(i + "(" + condMap.get(cond) + ")"));
                 return;
             }
             condMap.put(cond, i);
@@ -145,7 +146,7 @@ public final class LinkedListReflectiveD5 {
 
     private static String hash(boolean[] distribution) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 2048; i++) {
             int temp = 0;
             for (int j = 0; j < 32; j++) {
                 temp <<= 1;

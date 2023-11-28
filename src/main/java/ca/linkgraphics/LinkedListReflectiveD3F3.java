@@ -123,6 +123,7 @@ public final class LinkedListReflectiveD3F3 {
             }
             g.add(sg);
             if (condMap.containsKey(cond)) {
+                sg.graphAttrs().add(Label.html(i + "(" + condMap.get(cond) + ")"));
                 return;
             }
             condMap.put(cond, i);

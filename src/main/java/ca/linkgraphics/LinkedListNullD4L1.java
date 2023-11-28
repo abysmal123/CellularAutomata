@@ -121,6 +121,7 @@ public final class LinkedListNullD4L1 {
             }
             g.add(sg);
             if (condMap.containsKey(cond)) {
+                sg.graphAttrs().add(Label.html(i + "(" + condMap.get(cond) + ")"));
                 return;
             }
             condMap.put(cond, i);

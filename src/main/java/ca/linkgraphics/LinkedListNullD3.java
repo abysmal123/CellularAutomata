@@ -117,6 +117,7 @@ public final class LinkedListNullD3 {
             }
             g.add(sg);
             if (condMap[dp[now]] != -1) {
+                sg.graphAttrs().add(Label.html(i + "(" + condMap[dp[now]] + ")"));
                 return;
             }
             condMap[dp[now]] = i;
