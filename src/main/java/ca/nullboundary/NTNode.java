@@ -1,6 +1,4 @@
-package ca.reflective;
-
-import java.util.*;
+package ca.nullboundary;
 
 import ca.catools.Tools;
 import guru.nidi.graphviz.attribute.Color;
@@ -9,52 +7,62 @@ import guru.nidi.graphviz.attribute.Shape;
 import guru.nidi.graphviz.attribute.Style;
 import guru.nidi.graphviz.model.MutableNode;
 
-public class RTNode {
-    private static final Map<Integer, Set<Integer>> palindromeSets = new HashMap<>();
+import java.util.*;
+
+public class NTNode {
+    private static final Map<Integer, Set<Integer>> ZeroTailSets = new HashMap<>();
 
     protected int m;
 
     protected Integer[] tuples;
 
-    protected RTNode(int _m, Integer[] _tuples) {
+    protected NTNode(int _m, Integer[] _tuples) {
         m = _m;
         Arrays.sort(_tuples);
         tuples = _tuples;
     }
 
-    protected RTNode(int _m, Set<Integer> set) {
+    protected NTNode(int _m, Set<Integer> set) {
         Integer[] _tuples = set.toArray(new Integer[0]);
         m = _m;
         Arrays.sort(_tuples);
         tuples = _tuples;
     }
 
-    public static Set<Integer> getPalindromeSet(int _m) {
-        if (!palindromeSets.containsKey(_m)) {
-            Set<Integer> set = new HashSet<>();
-            int max = 1 << (_m >> 1), hf = _m >> 1;
-            for (int i = 0; i < max; i++) {
-                int num = i;
-                for (int j = 0; j < hf; j++) {
-                    if (((i >> j) & 1) == 1) {
-                        num += (1 << (_m - j - 1));
-                    }
-                }
-                set.add(num);
-            }
-            palindromeSets.put(_m, set);
+    public static Set<Integer> getZeroTailSet(int _m, int r_radius) {
+        if (_m < r_radius) {
+            throw new IllegalArgumentException("直径、半径参数错误。m: " + _m
+                    + ", r_radius: " + r_radius);
         }
-        return palindromeSets.get(_m);
+        int idx = (_m << 4) + r_radius;
+        if (!ZeroTailSets.containsKey(idx)) {
+            Set<Integer> set = new HashSet<>();
+            int max = 1 << (_m - r_radius);
+            for (int i = 0; i < max; i++) {
+                set.add(i << r_radius);
+            }
+            ZeroTailSets.put(idx, set);
+        }
+        return ZeroTailSets.get(idx);
     }
 
-    public static RTNode getPalindromeNode(int _m) {
-        return new RTNode(_m, getPalindromeSet(_m));
+    public static NTNode getRootNode(int _m, int l_radius) {
+        if (_m < l_radius) {
+            throw new IllegalArgumentException("直径、半径参数错误。m: " + _m
+                    + ", l_radius: " + l_radius);
+        }
+        int max = 1 << (_m - l_radius);
+        Integer[] _tuples = new Integer[max];
+        for (int i = 0; i < max; i++) {
+            _tuples[i] = i;
+        }
+        return new NTNode(_m, _tuples);
     }
 
-    public boolean isEden() {
+    public boolean isEden(int r_radius) {
         boolean ret = true;
         for (int t : tuples) {
-            if (getPalindromeSet(m).contains(t)) {
+            if (getZeroTailSet(m, r_radius).contains(t)) {
                 ret = false;
                 break;
             }
@@ -62,12 +70,12 @@ public class RTNode {
         return ret;
     }
 
-    public RTNode[] getChildren(boolean[] rule) {
+    public NTNode[] getChildren(boolean[] rule) {
         if (rule.length != (1 << (m + 1))) {
             throw new IllegalArgumentException("规则长度错误。rule.length: " + rule.length
                     + ", m + 1: " + (m + 1));
         }
-        RTNode[] children = new RTNode[2];
+        NTNode[] children = new NTNode[2];
         Set<Integer>[] chTuples= new Set[2];
         for (int i = 0; i < 2; i++) {
             chTuples[i] = new HashSet<>();
@@ -78,17 +86,17 @@ public class RTNode {
             chTuples[rule[tt + 1] ? 1 : 0].add((tt + 1) % (1 << m));
         }
         for (int i = 0; i < 2; i++) {
-            children[i] = new RTNode(m, chTuples[i]);
+            children[i] = new NTNode(m, chTuples[i]);
         }
         return children;
     }
 
-    public void writeNode(MutableNode mNode) {
-        boolean hasPalidrome = false;
+    public void writeNode(MutableNode mNode, int r_radius) {
+        boolean fitsNull = false;
         StringBuilder sb = new StringBuilder();
         for (int t : tuples) {
-            if (getPalindromeSet(m).contains(t)) {
-                hasPalidrome = true;
+            if (getZeroTailSet(m, r_radius).contains(t)) {
+                fitsNull = true;
                 sb.append("<b>&nbsp;").append(Tools.toNBitString(t, m)).append("</b>");
             } else {
                 sb.append(Tools.toNBitString(t, m));
@@ -96,7 +104,7 @@ public class RTNode {
             sb.append("<br/>");
         }
         mNode.add(Shape.RECTANGLE, Style.ROUNDED, Label.html(sb.toString()));
-        if (!hasPalidrome) {
+        if (!fitsNull) {
             mNode.add(Style.combine(Style.FILLED, Style.ROUNDED), Color.RED);
         }
     }
@@ -118,7 +126,7 @@ public class RTNode {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof RTNode that)) {
+        if (!(o instanceof NTNode that)) {
             return false;
         }
         if (m != that.m || tuples.length != that.tuples.length) {

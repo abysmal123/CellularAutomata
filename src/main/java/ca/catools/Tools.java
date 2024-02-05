@@ -73,6 +73,28 @@ public final class Tools {
 		return sb.reverse().toString();
 	}
 
+	// 将int转换为三进制表示的String
+	public static String toNBitTernaryString(int num, int n) {
+
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < n; i++) {
+			sb.append(num % 3);
+			num /= 3;
+		}
+		return sb.reverse().toString();
+	}
+
+	// 将long转换为三进制表示的String
+	public static String toNBitTernaryString(long num, int n) {
+
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < n; i++) {
+			sb.append(num % 3);
+			num /= 3;
+		}
+		return sb.reverse().toString();
+	}
+
 	// 将二进制表示的String转换为int
 	public static int toInteger(String binary) {
 
@@ -80,7 +102,24 @@ public final class Tools {
 		for (int i = 0; i < n; i++) {
 			dec <<= 1;
 			if (binary.charAt(i) == '1') {
-				dec |= 1;
+				dec++;
+			} else if (binary.charAt(i) != '0') {
+				throw new IllegalArgumentException("必须为01串。"
+						+ "Must be binary. Input: " + binary);
+			}
+		}
+		return dec;
+	}
+
+	// 将二进制表示的String转换为long
+	public static long toLong(String binary) {
+
+		long dec = 0;
+		int n = binary.length();
+		for (int i = 0; i < n; i++) {
+			dec <<= 1;
+			if (binary.charAt(i) == '1') {
+				dec++;
 			} else if (binary.charAt(i) != '0') {
 				throw new IllegalArgumentException("必须为01串。"
 						+ "Must be binary. Input: " + binary);

@@ -1,6 +1,4 @@
-package ca.reflective;
-
-import java.util.*;
+package ca.reflectivef3;
 
 import ca.catools.Tools;
 import guru.nidi.graphviz.attribute.Color;
@@ -9,20 +7,22 @@ import guru.nidi.graphviz.attribute.Shape;
 import guru.nidi.graphviz.attribute.Style;
 import guru.nidi.graphviz.model.MutableNode;
 
-public class RTNode {
+import java.util.*;
+
+public class F3RTNode {
     private static final Map<Integer, Set<Integer>> palindromeSets = new HashMap<>();
 
     protected int m;
 
     protected Integer[] tuples;
 
-    protected RTNode(int _m, Integer[] _tuples) {
+    protected F3RTNode(int _m, Integer[] _tuples) {
         m = _m;
         Arrays.sort(_tuples);
         tuples = _tuples;
     }
 
-    protected RTNode(int _m, Set<Integer> set) {
+    protected F3RTNode(int _m, Set<Integer> set) {
         Integer[] _tuples = set.toArray(new Integer[0]);
         m = _m;
         Arrays.sort(_tuples);
@@ -32,13 +32,12 @@ public class RTNode {
     public static Set<Integer> getPalindromeSet(int _m) {
         if (!palindromeSets.containsKey(_m)) {
             Set<Integer> set = new HashSet<>();
-            int max = 1 << (_m >> 1), hf = _m >> 1;
+            int max = powOfThree(_m >> 1), hf = _m >> 1;
             for (int i = 0; i < max; i++) {
                 int num = i;
                 for (int j = 0; j < hf; j++) {
-                    if (((i >> j) & 1) == 1) {
-                        num += (1 << (_m - j - 1));
-                    }
+                    int digit = (i / powOfThree(j)) % 3;
+                    num += digit * powOfThree(_m - j - 1);
                 }
                 set.add(num);
             }
@@ -47,8 +46,8 @@ public class RTNode {
         return palindromeSets.get(_m);
     }
 
-    public static RTNode getPalindromeNode(int _m) {
-        return new RTNode(_m, getPalindromeSet(_m));
+    public static F3RTNode getPalindromeNode(int _m) {
+        return new F3RTNode(_m, getPalindromeSet(_m));
     }
 
     public boolean isEden() {
@@ -62,23 +61,24 @@ public class RTNode {
         return ret;
     }
 
-    public RTNode[] getChildren(boolean[] rule) {
-        if (rule.length != (1 << (m + 1))) {
+    public F3RTNode[] getChildren(int[] rule) {
+        if (rule.length != (powOfThree(m + 1))) {
             throw new IllegalArgumentException("规则长度错误。rule.length: " + rule.length
                     + ", m + 1: " + (m + 1));
         }
-        RTNode[] children = new RTNode[2];
-        Set<Integer>[] chTuples= new Set[2];
-        for (int i = 0; i < 2; i++) {
+        F3RTNode[] children = new F3RTNode[3];
+        Set<Integer>[] chTuples= new Set[3];
+        for (int i = 0; i < 3; i++) {
             chTuples[i] = new HashSet<>();
         }
         for (int t : tuples) {
-            int tt = t << 1;
-            chTuples[rule[tt] ? 1 : 0].add(tt % (1 << m));
-            chTuples[rule[tt + 1] ? 1 : 0].add((tt + 1) % (1 << m));
+            int tt = t * 3;
+            for (int i = 0; i < 3; i++) {
+                chTuples[rule[tt + i]].add((tt + i) % powOfThree(m));
+            }
         }
-        for (int i = 0; i < 2; i++) {
-            children[i] = new RTNode(m, chTuples[i]);
+        for (int i = 0; i < 3; i++) {
+            children[i] = new F3RTNode(m, chTuples[i]);
         }
         return children;
     }
@@ -89,9 +89,9 @@ public class RTNode {
         for (int t : tuples) {
             if (getPalindromeSet(m).contains(t)) {
                 hasPalidrome = true;
-                sb.append("<b>&nbsp;").append(Tools.toNBitString(t, m)).append("</b>");
+                sb.append("<b>&nbsp;").append(Tools.toNBitTernaryString(t, m)).append("</b>");
             } else {
-                sb.append(Tools.toNBitString(t, m));
+                sb.append(Tools.toNBitTernaryString(t, m));
             }
             sb.append("<br/>");
         }
@@ -118,7 +118,7 @@ public class RTNode {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof RTNode that)) {
+        if (!(o instanceof F3RTNode that)) {
             return false;
         }
         if (m != that.m || tuples.length != that.tuples.length) {
@@ -131,6 +131,23 @@ public class RTNode {
             }
         }
         return true;
+    }
+
+    protected static int powOfThree(int k) {
+        if (powCache[k] == -1) {
+            int res = 1;
+            for (int i = 0; i < k; i++) {
+                res *= 3;
+            }
+            powCache[k] = res;
+        }
+        return powCache[k];
+    }
+
+    protected final static int[] powCache;
+    static {
+        powCache = new int[10];
+        Arrays.fill(powCache, -1);
     }
 
 }

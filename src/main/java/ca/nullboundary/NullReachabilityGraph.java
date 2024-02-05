@@ -1,4 +1,4 @@
-package ca.reflective;
+package ca.nullboundary;
 
 import guru.nidi.graphviz.attribute.Label;
 import guru.nidi.graphviz.engine.Format;
@@ -8,27 +8,26 @@ import guru.nidi.graphviz.model.MutableNode;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Queue;
 
 import static guru.nidi.graphviz.model.Factory.*;
 
-public final class ShowProcedureTree {
-    // public:
-
-    public static void storeImage(String r, int d, String fileName) throws IOException {
+public class NullReachabilityGraph {
+    public static void storeImage(String r, int d, int l_radius, String fileName) throws IOException {
         if (r.length() != 1 << d) {
             throw new IllegalArgumentException("规则长度与设定的直径不符。");
         }
-        if ((d & 1) == 0) {         // 偶数直径向上转化为奇数直径
-            storeImage(r + r, d + 1, fileName);
-        } else {
-            diameter = d;
-            MutableGraph graph = toGraph(r);
-            Graphviz.fromGraph(graph).render(Format.PNG).toFile(new File(PATH + fileName + ".png"));
-        }
+        diameter = d;
+        left_radius = l_radius;
+        right_radius = d - 1 - l_radius;
+        MutableGraph graph = toGraph(r);
+        Graphviz.fromGraph(graph).render(Format.PNG).toFile(new File(PATH + fileName + ".png"));
     }
 
-    public static void storeImage(String r, String fileName) throws IOException {
+    public static void storeImage(String r, int l_radius, String fileName) throws IOException {
         int d = 0, len = r.length();
         while (len > 1) {
             if ((len & 1) == 1) {
@@ -40,7 +39,7 @@ public final class ShowProcedureTree {
         if (d < 3) {
             throw new IllegalArgumentException("直径至少为3。");
         }
-        storeImage(r, d, fileName);
+        storeImage(r, d, l_radius, fileName);
     }
 
     public static void setPath(String path) {
@@ -50,17 +49,21 @@ public final class ShowProcedureTree {
     // private:
     private static int diameter = 3;
 
+    private static int left_radius = 1;
+
+    private static int right_radius = 1;
+
     private static String PATH = "graph/";
 
     private static int count = 0;
 
-    private static Map<RTNode, RTNode[]> edges;
+    private static Map<NTNode, NTNode[]> edges;
 
-    private static Map<RTNode, MutableNode> nodeTable;
+    private static Map<NTNode, MutableNode> nodeTable;
 
     private static MutableGraph toGraph(String r) {
 
-        MutableGraph graph = mutGraph("Reflective " + r).setDirected(true);
+        MutableGraph graph = mutGraph("Null " + r).setDirected(true);
         graph.graphAttrs().add(Label.graphName().locate(Label.Location.TOP));
         count = 0;
         edges = new HashMap<>();
@@ -72,25 +75,25 @@ public final class ShowProcedureTree {
     private static void draw(final String r, MutableGraph graph) {
 
         boolean[] RULE = getRule(r);
-        Queue<RTNode> processList = new ArrayDeque<>();
-        RTNode root = RTNode.getPalindromeNode(diameter - 1);
+        Queue<NTNode> processList = new ArrayDeque<>();
+        NTNode root = NTNode.getRootNode(diameter - 1, left_radius);
         processList.offer(root);
         edges.put(root, root.getChildren(RULE));
         MutableNode rootNode = mutNode((count++) + "");
-        root.writeNode(rootNode);
+        root.writeNode(rootNode, right_radius);
         nodeTable.put(root, rootNode);
         graph.add(rootNode);
         while (!processList.isEmpty()) {
-            RTNode cur = processList.poll();
+            NTNode cur = processList.poll();
             MutableNode curNode = nodeTable.get(cur);
-            RTNode[] children = edges.get(cur);
+            NTNode[] children = edges.get(cur);
             for (int k = 0; k < 2; k++) {
-                MutableNode childNode = null;
+                MutableNode childNode;
                 if (!edges.containsKey(children[k])) {
                     processList.offer(children[k]);
                     edges.put(children[k], children[k].getChildren(RULE));
                     childNode = mutNode((count++) + "");
-                    children[k].writeNode(childNode);
+                    children[k].writeNode(childNode, right_radius);
                     graph.add(childNode);
                     nodeTable.put(children[k], childNode);
                 } else {
@@ -109,5 +112,4 @@ public final class ShowProcedureTree {
         }
         return rule;
     }
-
 }

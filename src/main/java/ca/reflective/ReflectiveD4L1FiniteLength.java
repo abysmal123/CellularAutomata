@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
-public class ReflectiveD4L1FiniteLength2 {
+public class ReflectiveD4L1FiniteLength {
 	
 // public:
 	public static boolean hasEden(String r) {
