@@ -122,4 +122,71 @@ public final class RuleGenerator {
 		}
 		return ret;
 	}
+
+	public static String[] allD7LinearRules(boolean allowsConstant) {
+		Set<String> rs = new HashSet<>();
+		for (int a = 0; a < 3; a++) {
+			if (allowsConstant && a > 0) {
+				break;
+			}
+			for (int g = 0; g < 3; g++) {
+				for (int h = 0; h < 3; h++) {
+					for (int i = 0; i < 3; i++) {
+						for (int j = 0; j < 3; j++) {
+							for (int k = 0; k < 3; k++) {
+								for (int l = 0; l < 3; l++) {
+									for (int m = 0; m < 3; m++) {
+										StringBuilder sb = new StringBuilder();
+										for (int b = 0; b < 2187; b++) {
+											sb.append((b / 729 * g + b / 243 * h + b / 81 * i + b / 27 * j +  b / 9 * k + b / 3 * l + (b % 3) * m + a) % 3);
+										}
+										rs.add(sb.reverse().toString());
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		String[] ret = new String[rs.size()];
+		int i = 0;
+		for (String r : rs) {
+			ret[i++] = r;
+		}
+		return ret;
+	}
+
+	public static Map<String, String> allD7LinearRuleEntries(boolean allowsConstant) {
+		Map<String, String> ret = new HashMap<>();
+		for (int a = 0; a < 3; a++) {
+			if (!allowsConstant && a > 0) {
+				break;
+			}
+			for (int g = 0; g < 3; g++) {
+				for (int h = 0; h < 3; h++) {
+					for (int i = 0; i < 3; i++) {
+						for (int j = 0; j < 3; j++) {
+							for (int k = 0; k < 3; k++) {
+								for (int l = 0; l < 3; l++) {
+									for (int m = 0; m < 3; m++) {
+										StringBuilder value = new StringBuilder();
+										for (int b = 0; b < 2187; b++) {
+											value.append((b / 729 * g + b / 243 * h + b / 81 * i + b / 27 * j +  b / 9 * k + b / 3 * l + (b % 3) * m + a) % 3);
+										}
+										StringBuilder key = new StringBuilder(6).append(g).append(h).append(i).append(j).append(k).append(l).append(m);
+										if (allowsConstant) {
+											key.append(a);
+										}
+										ret.put(key.toString(), value.reverse().toString());
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return ret;
+	}
 }

@@ -52,14 +52,13 @@ public class RTNode {
     }
 
     public boolean isEden() {
-        boolean ret = true;
+        int palindromeCount = 0;
         for (int t : tuples) {
             if (getPalindromeSet(m).contains(t)) {
-                ret = false;
-                break;
+                palindromeCount++;
             }
         }
-        return ret;
+        return palindromeCount != 1;
     }
 
     public RTNode[] getChildren(boolean[] rule) {

@@ -11,10 +11,7 @@ import guru.nidi.graphviz.model.MutableNode;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayDeque;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 import static guru.nidi.graphviz.model.Factory.mutGraph;
 import static guru.nidi.graphviz.model.Factory.mutNode;
@@ -29,6 +26,54 @@ public final class LinkedListReflectiveD5 {
 
     public static void setPath(String path) {
         PATH = path;
+    }
+
+
+    // 运行“桶链”算法，并返回算法结束时桶的数量
+    public static int bucketNumberWhenEnds(final String _r) {
+        r = _r;
+        int[] rule = getRule(r);
+        edges = new HashMap<>();
+        int root = 33345;
+        int bucketCnt = 0;
+        Map<String, Integer> bucketMap = new HashMap<>();
+        TreeSet<Integer>[] dp = new TreeSet[2];
+        for (int i = 0; i < 2; i++) {
+            dp[i] = new TreeSet<>();
+        }
+        dp[0].add(root);
+        for (int i = 0;; i++) {
+            int now = i & 1, next = (i + 1) & 1;
+            bucketCnt++;
+            String bucket = hash(dp[now]);
+            if (dp[now].contains(0)) {
+                break;
+            }
+            for (int cur : dp[now]) {
+                int[] children = edges.getOrDefault(cur, null);
+                if (children == null) {
+                    children = new int[2];
+                    for (int j = 0; j < 16; j++) {
+                        if (((cur >> j) & 1) == 1) {
+                            int head = (j << 1);
+                            for (int tail = 0; tail < 2; tail++) {
+                                children[rule[head + tail]] |= (1 << ((head + tail) % 16));
+                            }
+                        }
+                    }
+                    edges.put(cur, children);
+                }
+                for (int child : children) {
+                    dp[next].add(child);
+                }
+            }
+            if (bucketMap.containsKey(bucket)) {
+                break;
+            }
+            bucketMap.put(bucket, i);
+            dp[now].clear();
+        }
+        return bucketCnt;
     }
 
 // private:
@@ -142,6 +187,14 @@ public final class LinkedListReflectiveD5 {
             rule[i] = b;
         }
         return rule;
+    }
+
+    private static String hash(TreeSet<Integer> distribution) {
+        StringBuilder sb = new StringBuilder();
+        for (int item : distribution) {
+            sb.append(item).append(".");
+        }
+        return sb.toString();
     }
 
     private static String hash(boolean[] distribution) {

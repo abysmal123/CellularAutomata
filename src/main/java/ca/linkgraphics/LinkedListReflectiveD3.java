@@ -28,6 +28,50 @@ public final class LinkedListReflectiveD3 {
         PATH = path;
     }
 
+    public static int bucketNumberWhenEnds(final String _r) {
+        r = _r;
+        int rule = getRule(r);
+        edges = new HashMap<>();
+        int root = 9;
+        int bucketCnt = 0;
+        int[] bucketMap = new int[1 << 16];
+        Arrays.fill(bucketMap, -1);
+        int[] dp = new int[2];
+        dp[0] = 1 << root;
+        for (int i = 0;; i++) {
+            int now = i & 1, next = (i + 1) & 1;
+            bucketCnt++;
+            if ((dp[now] & 1) == 1) {
+                break;
+            }
+            for (int cur = 0; cur < 16; cur++) {
+                if (((dp[now] >> cur) & 1) == 0) continue;
+                int[] children = edges.getOrDefault(cur, null);
+                if (children == null) {
+                    children = new int[2];
+                    for (int j = 0; j < 4; j++) {
+                        if (((cur >> j) & 1) == 1) {
+                            int head = (j << 1);
+                            for (int tail = 0; tail < 2; tail++) {
+                                children[(rule >> (head + tail)) & 1] |= (1 << ((head + tail) % 4));
+                            }
+                        }
+                    }
+                    edges.put(cur, children);
+                }
+                for (int child : children) {
+                    dp[next] |= (1 << child);
+                }
+            }
+            if (bucketMap[dp[now]] != -1) {
+                break;
+            }
+            bucketMap[dp[now]] = i;
+            dp[now] = 0;
+        }
+        return bucketCnt;
+    }
+
 // private:
     private static String PATH = "graph/";                      // 图片存储路径
     private static String r;                                    // 当前规则
