@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 public final class Tools {
 
 	// 返回规则的整型表示
-	public static long getRule(String r, int len) {
+	public static long getRuleAsLong(String r, int len) {
 		
 		if (r.length() != len) {
 			throw new IllegalArgumentException("规则长度必须为" + len + "。 "
@@ -26,8 +26,44 @@ public final class Tools {
 		return rule;
 	}
 
+	// 返回规则的整型数组表示
+	public static int[] getRuleAsIntArray(String r, int len) {
+		if (r.length() != len) {
+			throw new IllegalArgumentException("规则长度必须为" + len + "。 "
+					+ "Length of input rule must be " + len + ". Input rule: " + r);
+		}
+		int[] RULE = new int[r.length()];
+		for (int i = r.length() - 1, j = 0; i >= 0; i--, j++) {
+			int bit = r.charAt(j) - '0';
+			if (bit != 0 && bit != 1) {
+				throw new IllegalArgumentException("规则必须为01串。"
+						+ "Input rule must be binary. Input rule: " + r);
+			}
+			RULE[i] = bit;
+		}
+		return RULE;
+	}
+
 	// 返回规则的布尔数组表示
-	public static boolean[] getRule(String r) {
+	public static boolean[] getRuleAsBooleanArray(String r, int len) {
+		if (r.length() != len) {
+			throw new IllegalArgumentException("规则长度必须为" + len + "。 "
+					+ "Length of input rule must be " + len + ". Input rule: " + r);
+		}
+		boolean[] RULE = new boolean[r.length()];
+		for (int i = r.length() - 1, j = 0; i >= 0; i--, j++) {
+			char bit = r.charAt(j);
+			if (bit != '0' && bit != '1') {
+				throw new IllegalArgumentException("规则必须为01串。"
+						+ "Input rule must be binary. Input rule: " + r);
+			}
+			RULE[i] = bit == '1';
+		}
+		return RULE;
+	}
+
+	// 返回规则的布尔数组表示
+	public static boolean[] getRuleAsBooleanArray(String r) {
 		int d = 0, len = r.length();
 		while (len > 1) {
 			if ((len & 1) == 1) {
