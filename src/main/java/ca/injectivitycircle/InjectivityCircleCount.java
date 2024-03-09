@@ -3,11 +3,7 @@ package ca.injectivitycircle;
 import java.util.*;
 import ca.catools.Tools;
 
-<<<<<<< Updated upstream:src/main/java/ca/injectivitycircle/InjectivityCircleCount.java
 public final class InjectivityCircleCount {     // d >= 3
-=======
-public final class injectivityCircleCount {     // d >= 3
->>>>>>> Stashed changes:src/main/java/ca/injectivitycircle/injectivityCircleCount.java
 
     // 统计环（规则，左半径，右半径，细胞数，移位相同是否视为同一配置，是否打印到控制台）,打印环长分布列表，返回环长分布的位图（bitmap）
     public static long showCircleList(String r, int lr, int rr, int n, boolean shiftingAsOne, boolean show) {
