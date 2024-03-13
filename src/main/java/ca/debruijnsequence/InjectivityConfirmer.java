@@ -4,22 +4,24 @@ import ca.catools.Tools;
 
 public final class InjectivityConfirmer {
     private final int d;
+    private final String deBruijnSequence;
+    private final int[] c0;
     private int[] rule;
 
     public InjectivityConfirmer(int _d) {
         d = _d;
+        deBruijnSequence = DeBruijnSequence.getSequence(_d);
+        c0 = parseIntArray(deBruijnSequence);
     }
 
     public boolean confirmT2(String r) {
-        int len = 1 << d;
-        rule = Tools.getRuleAsIntArray(r, len);
-        int[] c0 = parseIntArray(DeBruijnSequence.getSequence(d));
+        rule = Tools.getRuleAsIntArray(r, 1 << d);
         int[] c2 = nextConfig(nextConfig(c0));
-        return cycleEquals(c0, c2);
+        return cycleEquals(c2);
     }
 
     private int[] nextConfig(int[] conf) {
-        int m = conf.length, ne = 0, MASK = (1 << (d - 1)) - 1;
+        int m = conf.length, ne = 0, MASK = (1 << d) - 1;
         int[] ret = new int[m];
         for (int i = 0; i < d - 1; i++) {
             ne = (ne << 1) + conf[i];
@@ -48,9 +50,9 @@ public final class InjectivityConfirmer {
         return ret.toString();
     }
 
-    private static boolean cycleEquals(int[] conf1, int[] conf2) {
-        String s1 = parseString(conf1), s2 = parseString(conf2);
+    private boolean cycleEquals(int[] conf2) {
+        String s2 = parseString(conf2);
         s2 += s2;
-        return s2.contains(s1);
+        return s2.contains(deBruijnSequence);
     }
 }

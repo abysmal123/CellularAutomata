@@ -1,26 +1,26 @@
-package ca.nullboundary;
+package ca.surjectivity;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
 
-public class NullReversibility {
-    public static boolean reversible(String r, int l_radius) {
+public class InfiniteSurjectivityUnoptimized {
+
+    public static boolean surjective(String r) {
         int d = checkLength(r);
-        int r_radius = d - l_radius - 1;
         boolean[] RULE = getRule(r);
-        Map<NTNode, NTNode[]> edges = new HashMap<>();
-        Queue<NTNode> processList = new ArrayDeque<>();
-        NTNode root = NTNode.getRootNode(d - 1, l_radius);
+        Map<ITNodeUnoptimized, ITNodeUnoptimized[]> edges = new HashMap<>();
+        Queue<ITNodeUnoptimized> processList = new ArrayDeque<>();
+        ITNodeUnoptimized root = ITNodeUnoptimized.getRootNode(d, RULE);
         processList.offer(root);
         edges.put(root, root.getChildren(RULE));
         while (!processList.isEmpty()) {
-            NTNode cur = processList.poll();
-            if (cur.isEden(r_radius)) {
+            ITNodeUnoptimized cur = processList.poll();
+            if (cur.isEden()) {
                 return false;
             }
-            NTNode[] children = edges.get(cur);
+            ITNodeUnoptimized[] children = edges.get(cur);
             for (int k = 0; k < 2; k++) {
                 if (!edges.containsKey(children[k])) {
                     processList.offer(children[k]);
@@ -32,23 +32,22 @@ public class NullReversibility {
     }
 
     // 运行“判断零边界下的严格可逆性”的算法，并返回算法结束时节点的数量
-    public static int countNodeWhenReturn(String r, int l_radius) {
+    public static int countNodeWhenReturn(String r) {
         int d = checkLength(r);
-        int r_radius = d - l_radius - 1;
         int count = 0;
         boolean[] RULE = getRule(r);
-        Map<NTNode, NTNode[]> edges = new HashMap<>();
-        Queue<NTNode> processList = new ArrayDeque<>();
-        NTNode root = NTNode.getRootNode(d - 1, l_radius);
+        Map<ITNodeUnoptimized, ITNodeUnoptimized[]> edges = new HashMap<>();
+        Queue<ITNodeUnoptimized> processList = new ArrayDeque<>();
+        ITNodeUnoptimized root = ITNodeUnoptimized.getRootNode(d, RULE);
         processList.offer(root);
         edges.put(root, root.getChildren(RULE));
         while (!processList.isEmpty()) {
-            NTNode cur = processList.poll();
+            ITNodeUnoptimized cur = processList.poll();
             count++;
-            if (cur.isEden(r_radius)) {
+            if (cur.isEden()) {
                 return count;
             }
-            NTNode[] children = edges.get(cur);
+            ITNodeUnoptimized[] children = edges.get(cur);
             for (int k = 0; k < 2; k++) {
                 if (!edges.containsKey(children[k])) {
                     processList.offer(children[k]);
@@ -58,7 +57,7 @@ public class NullReversibility {
         }
         return count;
     }
-
+    
     private static int checkLength(String r) {
         int d = 0, len = r.length();
         while (len > 1) {

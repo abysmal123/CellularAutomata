@@ -164,6 +164,22 @@ public final class Tools {
 		return dec;
 	}
 
+	// 检查规则长度是否为2的整数次幂，返回规则直径
+	public static int checkLength(String r) {
+		int d = 0, len = r.length();
+		while (len > 1) {
+			if ((len & 1) == 1) {
+				throw new IllegalArgumentException("规则长度不为2的整数幂。");
+			}
+			d++;
+			len >>= 1;
+		}
+		if (d < 3) {
+			throw new IllegalArgumentException("直径至少为3。");
+		}
+		return d;
+	}
+
 	// 返回控制台日志记录器
 	public static Logger getConsoleLogger() {
 		return LoggerFactory.getLogger("consoleLogger");
