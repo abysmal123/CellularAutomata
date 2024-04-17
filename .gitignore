@@ -3,4 +3,5 @@ result/
 target/
 log/
 src/main/java/*.java
+src/test/java/*.java
 

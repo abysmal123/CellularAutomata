@@ -2,11 +2,23 @@ package ca.debruijnsequence;
 
 import ca.catools.Tools;
 
+import java.util.Arrays;
+
 public final class InjectivityConfirmer {
     private final int d;
     private final String deBruijnSequence;
     private final int[] c0;
     private int[] rule;
+
+    public void setRule(int[] rule) {
+        this.rule = rule;
+    }
+
+    public int[] printNextConfig(int[] conf) {
+        int[] c1 = nextConfig(conf);
+        System.out.println(Arrays.toString(c1));
+        return c1;
+    }
 
     public InjectivityConfirmer(int _d) {
         d = _d;
