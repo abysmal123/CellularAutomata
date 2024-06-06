@@ -183,6 +183,6 @@ public final class ShowProcedureTreeECA {
 	
 	public static void main(String[] args) throws IOException {
 		setPath("graph/test2022.8.6/");
-		storeImage("11110001");
+		storeImage("10011001");
 	}
 }
