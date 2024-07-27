@@ -144,7 +144,7 @@ public final class ShowLayerGraphECA {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		String r = "00010110";
+		String r = "10011001";
 		setPath("graph/test2023.8.31/periodic/");
 		storeImage(r, r + "(layer)");
 		//

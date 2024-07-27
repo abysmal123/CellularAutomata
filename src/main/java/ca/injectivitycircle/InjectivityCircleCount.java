@@ -8,7 +8,7 @@ public final class InjectivityCircleCount {     // d >= 3
     // 统计环（规则，左半径，右半径，细胞数，移位相同是否视为同一配置，是否打印到控制台）,打印环长分布列表，返回环长分布的位图（bitmap）
     public static long showCircleList(String r, int lr, int rr, int n, boolean shiftingAsOne, boolean show) {
         int d = lr + rr + 1;
-        boolean[] rule = Tools.getRule(r);
+        boolean[] rule = Tools.getRuleAsBooleanArray(r);
         int ruleMask = (1 << d) - 1;
         int lBoundaryMask = (1 << lr) - 1;
         int rBoundaryMask = (1 << rr) - 1;
@@ -64,7 +64,7 @@ public final class InjectivityCircleCount {     // d >= 3
     // 打印特定长度的环（规则，左半径，右半径，细胞数，移位相同是否视为同一配置，环长度，起始序号，末尾序号）
     public static void showCircleWithLength(String r, int lr, int rr, int n, boolean shiftingAsOne, int lengthForPrint, int startNum, int endNum) {
         int d = lr + rr + 1;
-        boolean[] rule = Tools.getRule(r);
+        boolean[] rule = Tools.getRuleAsBooleanArray(r);
         int ruleMask = (1 << d) - 1;
         int lBoundaryMask = (1 << lr) - 1;
         int rBoundaryMask = (1 << rr) - 1;
@@ -130,7 +130,7 @@ public final class InjectivityCircleCount {     // d >= 3
     public static void showConfigInCircle(String r, int lr, int rr, String c, boolean shiftingAsOne) {
         int d = lr + rr + 1;
         int n = c.length();
-        boolean[] rule = Tools.getRule(r);
+        boolean[] rule = Tools.getRuleAsBooleanArray(r);
         int config = Tools.toInteger(c);
         int ruleMask = (1 << d) - 1;
         int lBoundaryMask = (1 << lr) - 1;
@@ -199,7 +199,7 @@ public final class InjectivityCircleCount {     // d >= 3
     // 找到多对一的配置（规则，左半径，右半径，细胞个数，打印起始编号，打印终止编号）
     public static Map<Integer, List<Integer>> findManyForOne(String r, int lr, int rr, int n, int startNum, int endNum) {
         int d = lr + rr + 1;
-        boolean[] rule = Tools.getRule(r);
+        boolean[] rule = Tools.getRuleAsBooleanArray(r);
         int ruleMask = (1 << d) - 1;
         int lBoundaryMask = (1 << lr) - 1;
         int rBoundaryMask = (1 << rr) - 1;

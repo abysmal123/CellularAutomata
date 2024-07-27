@@ -123,7 +123,7 @@ public final class SpecialInjectivity {
 // main:
 	public static void main(String[] args) {
 		
-		printAll(4);
+		printAll(9);
 		
 	}
 	

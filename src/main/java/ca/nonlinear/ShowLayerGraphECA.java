@@ -135,7 +135,8 @@ public final class ShowLayerGraphECA {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		
+		setPath("graph/test2022.8.6/");
+		storeImage("10011001", "10011001");
 		//
 	}
 	
