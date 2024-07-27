@@ -27,7 +27,7 @@ public final class PeriodicNodeF8D3 {
         }
     }
 
-    private boolean[] tuples;    // 记录每种元组是否出现
+    private final boolean[] tuples;    // 记录每种元组是否出现
 
     private PeriodicNodeF8D3() {
         tuples = new boolean[LEN];
