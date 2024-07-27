@@ -8,7 +8,7 @@ public final class PeriodicNodeF8D3 {
 
     private static final int INT_SIZE = 32; // int类型的位数
     private static final int LEN = 4096; // 元组的种数
-    private static final int P = 8; // 状态集
+    public static final int P = 8; // 状态集
     private static final int SHIFT_ELE = 3; // 移位参数（单个元素）
     private static final int SHIFT_HALF = 6; // 移位参数（半元组）
     private static final int RULE_SIZE = 512;   // 规则长度
@@ -73,7 +73,7 @@ public final class PeriodicNodeF8D3 {
             if (tuples[tuple])
                 periodicTupleCount++;
         }
-        return periodicTupleCount == 1;
+        return periodicTupleCount != 1;
     }
 
     /**

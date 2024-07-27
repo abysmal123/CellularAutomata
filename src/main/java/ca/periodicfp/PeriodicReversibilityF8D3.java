@@ -45,4 +45,35 @@ public class PeriodicReversibilityF8D3 {
         memo.put(r, true);
         return true;
     }
+
+    /**
+     * 求给定规则的所有Garden-Of-Eden
+     * @param r 表示局部规则Wolfram数的字符串
+     * @return 此规则的Garden-Of-Eden的列表
+     */
+    public static List<String> getAllGOEs(String r) {
+        List<String> goeList = new ArrayList<>();
+        PeriodicNodeF8D3.setRule(r);
+        Map<PeriodicNodeF8D3, String> nodeMap = new HashMap<>();
+        Queue<PeriodicNodeF8D3> nodeQueue = new ArrayDeque<>();
+        PeriodicNodeF8D3 root = PeriodicNodeF8D3.getRoot();
+        nodeQueue.offer(root);
+        nodeMap.put(root, "");
+        while (!nodeQueue.isEmpty()) {
+            PeriodicNodeF8D3 cur = nodeQueue.poll();
+            PeriodicNodeF8D3[] children = cur.getChildren();
+            for (int i = 0; i < PeriodicNodeF8D3.P; i++) {
+                PeriodicNodeF8D3 child = children[i];
+                if (!nodeMap.containsKey(child)) {
+                    String seq = nodeMap.get(cur) + i;
+                    nodeMap.put(child, seq);
+                    nodeQueue.offer(child);
+                    if (child.isGOE()) {
+                        goeList.add(seq);
+                    }
+                }
+            }
+        }
+        return goeList;
+    }
 }
