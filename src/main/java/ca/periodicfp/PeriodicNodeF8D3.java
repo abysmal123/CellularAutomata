@@ -52,6 +52,24 @@ public final class PeriodicNodeF8D3 {
     }
 
     /**
+     * 设置局部规则，以最高位表示Wolfram数的最低位
+     * @param r 局部规则的Wolfram数的逆序字符串表示
+     * @throws IllegalArgumentException 如果输入规则有误
+     */
+    public static void setReversedRule(String r) throws IllegalArgumentException {
+        if (r.length() != RULE_SIZE) {
+            throw new IllegalArgumentException("Rule size incorrect.");
+        }
+        int i = 0;
+        for (char ch : r.toCharArray()) {
+            if (ch < '0' || ch > '7') {
+                throw new IllegalArgumentException("Rule format incorrect.");
+            }
+            rule[i++] = (byte) (ch - '0');
+        }
+    }
+
+    /**
      * 返回根节点
      * @return 根节点
      */

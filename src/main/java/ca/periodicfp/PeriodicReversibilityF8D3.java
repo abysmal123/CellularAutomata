@@ -17,13 +17,18 @@ public class PeriodicReversibilityF8D3 {
     /**
      * 判断给定规则是否可逆
      * @param r 表示局部规则Wolfram数的字符串
+     * @param reversed 表示规则的字符串是否为逆序
      * @return 规则是否可逆
      */
-    public static boolean isReversible(String r) {
+    public static boolean isReversible(String r, boolean reversed) {
         if (memo.containsKey(r)) {
             return memo.get(r);
         }
-        PeriodicNodeF8D3.setRule(r);
+        if (reversed) {
+            PeriodicNodeF8D3.setReversedRule(r);
+        } else {
+            PeriodicNodeF8D3.setRule(r);
+        }
         Set<PeriodicNodeF8D3> nodeSet = new HashSet<>();
         Queue<PeriodicNodeF8D3> nodeQueue = new ArrayDeque<>();
         PeriodicNodeF8D3 root = PeriodicNodeF8D3.getRoot();
@@ -49,11 +54,16 @@ public class PeriodicReversibilityF8D3 {
     /**
      * 求给定规则的所有Garden-Of-Eden
      * @param r 表示局部规则Wolfram数的字符串
+     * @param reversed 表示规则的字符串是否为逆序
      * @return 此规则的Garden-Of-Eden的列表
      */
-    public static List<String> getAllGOEs(String r) {
+    public static List<String> getAllGOEs(String r, boolean reversed) {
         List<String> goeList = new ArrayList<>();
-        PeriodicNodeF8D3.setRule(r);
+        if (reversed) {
+            PeriodicNodeF8D3.setReversedRule(r);
+        } else {
+            PeriodicNodeF8D3.setRule(r);
+        }
         Map<PeriodicNodeF8D3, String> nodeMap = new HashMap<>();
         Queue<PeriodicNodeF8D3> nodeQueue = new ArrayDeque<>();
         PeriodicNodeF8D3 root = PeriodicNodeF8D3.getRoot();
@@ -75,5 +85,43 @@ public class PeriodicReversibilityF8D3 {
             }
         }
         return goeList;
+    }
+
+    /**
+     * 求给定规则的Garden-Of-Eden的信息
+     * @param r 表示局部规则Wolfram数的字符串
+     * @param reversed 表示规则的字符串是否为逆序
+     * @return [此规则GOE的个数, 此规则所有GOE配置的总长度]
+     */
+    public static int[] getInfoOfGOEs(String r, boolean reversed) {
+        int[] info = new int[2];
+
+        if (reversed) {
+            PeriodicNodeF8D3.setReversedRule(r);
+        } else {
+            PeriodicNodeF8D3.setRule(r);
+        }
+        Map<PeriodicNodeF8D3, String> nodeMap = new HashMap<>();
+        Queue<PeriodicNodeF8D3> nodeQueue = new ArrayDeque<>();
+        PeriodicNodeF8D3 root = PeriodicNodeF8D3.getRoot();
+        nodeQueue.offer(root);
+        nodeMap.put(root, "");
+        while (!nodeQueue.isEmpty()) {
+            PeriodicNodeF8D3 cur = nodeQueue.poll();
+            PeriodicNodeF8D3[] children = cur.getChildren();
+            for (int i = 0; i < PeriodicNodeF8D3.P; i++) {
+                PeriodicNodeF8D3 child = children[i];
+                if (!nodeMap.containsKey(child)) {
+                    String seq = nodeMap.get(cur) + i;
+                    nodeMap.put(child, seq);
+                    nodeQueue.offer(child);
+                    if (child.isGOE()) {
+                        info[0]++;
+                        info[1] += seq.length();
+                    }
+                }
+            }
+        }
+        return info;
     }
 }
