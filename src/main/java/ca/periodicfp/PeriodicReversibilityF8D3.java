@@ -17,7 +17,7 @@ public class PeriodicReversibilityF8D3 {
     /**
      * 判断给定规则是否可逆
      * @param r 表示局部规则Wolfram数的字符串
-     * @return
+     * @return 规则是否可逆
      */
     public static boolean isReversible(String r) {
         if (memo.containsKey(r)) {
