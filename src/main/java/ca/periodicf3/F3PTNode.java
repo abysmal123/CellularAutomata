@@ -1,4 +1,4 @@
-package ca.reflectivef3;
+package ca.periodicf3;
 
 import ca.catools.Tools;
 import guru.nidi.graphviz.attribute.Color;
@@ -9,86 +9,89 @@ import guru.nidi.graphviz.model.MutableNode;
 
 import java.util.*;
 
-public class F3RTNode {
-    private static final Map<Integer, Set<Integer>> palindromeSets = new HashMap<>();
+public class F3PTNode {
+    private static final Map<Integer, Set<Integer>> SelfSets = new HashMap<>();
 
     protected int m;
 
-    protected Integer[] tuples;
+    protected Integer[] pairs;
 
-    protected F3RTNode(int _m, Integer[] _tuples) {
+    protected int mPowerOfThree;
+
+    protected F3PTNode(int _m, Integer[] _pairs) {
         m = _m;
-        Arrays.sort(_tuples);
-        tuples = _tuples;
+        Arrays.sort(_pairs);
+        pairs = _pairs;
+        mPowerOfThree = powOfThree(_m);
     }
 
-    protected F3RTNode(int _m, Set<Integer> set) {
-        Integer[] _tuples = set.toArray(new Integer[0]);
+    protected F3PTNode(int _m, Set<Integer> set) {
+        Integer[] _pairs = set.toArray(new Integer[0]);
         m = _m;
-        Arrays.sort(_tuples);
-        tuples = _tuples;
+        Arrays.sort(_pairs);
+        pairs = _pairs;
+        mPowerOfThree = powOfThree(_m);
     }
 
-    public static Set<Integer> getPalindromeSet(int _m) {
-        if (!palindromeSets.containsKey(_m)) {
+    public static Set<Integer> getSelfSet(int _m) {
+        if (!SelfSets.containsKey(_m)) {
             Set<Integer> set = new HashSet<>();
-            int max = powOfThree(_m >> 1), hf = _m >> 1;
+            int max = powOfThree(_m);
             for (int i = 0; i < max; i++) {
-                int num = i;
-                for (int j = 0; j < hf; j++) {
-                    int digit = (i / powOfThree(j)) % 3;
-                    num += digit * powOfThree(_m - j - 1);
-                }
-                set.add(num);
+                set.add(i * max + i);
             }
-            palindromeSets.put(_m, set);
+            SelfSets.put(_m, set);
         }
-        return palindromeSets.get(_m);
+        return SelfSets.get(_m);
     }
 
-    public static F3RTNode getPalindromeNode(int _m) {
-        return new F3RTNode(_m, getPalindromeSet(_m));
+    public static F3PTNode getSelfNode(int _m) {
+        return new F3PTNode(_m, getSelfSet(_m));
     }
 
     public boolean isEden() {
         int palindromeCnt = 0;
-        for (int t : tuples) {
-            if (getPalindromeSet(m).contains(t)) {
+        for (int p : pairs) {
+            if (getSelfSet(m).contains(p)) {
                 palindromeCnt++;
             }
         }
         return palindromeCnt != 1;
     }
 
-    public F3RTNode[] getChildren(int[] rule) {
+    public F3PTNode[] getChildren(int[] rule) {
         if (rule.length != (powOfThree(m + 1))) {
             throw new IllegalArgumentException("规则长度错误。rule.length: " + rule.length
                     + ", m + 1: " + (m + 1));
         }
-        F3RTNode[] children = new F3RTNode[3];
+        F3PTNode[] children = new F3PTNode[3];
         Set<Integer>[] chTuples= new Set[3];
         for (int i = 0; i < 3; i++) {
             chTuples[i] = new HashSet<>();
         }
-        for (int t : tuples) {
-            int tt = t * 3;
+        for (int p : pairs) {
+            int lTuple = p / mPowerOfThree, rTuple = p % mPowerOfThree;
+            int tt = rTuple * 3;
             for (int i = 0; i < 3; i++) {
-                chTuples[rule[tt + i]].add((tt + i) % powOfThree(m));
+                chTuples[rule[tt + i]].add((tt + i) % mPowerOfThree + lTuple * mPowerOfThree);
             }
         }
         for (int i = 0; i < 3; i++) {
-            children[i] = new F3RTNode(m, chTuples[i]);
+            children[i] = new F3PTNode(m, chTuples[i]);
         }
         return children;
     }
 
     public void writeNode(MutableNode mNode) {
         StringBuilder sb = new StringBuilder();
-        for (int t : tuples) {
-            if (getPalindromeSet(m).contains(t)) {
-                sb.append("<b>&nbsp;").append(Tools.toNBitTernaryString(t, m)).append("</b>");
+        for (int p : pairs) {
+            int lTuple = p / mPowerOfThree, rTuple = p % mPowerOfThree;
+            String pStr = "&lt;" + Tools.toNBitTernaryString(lTuple, m) + ","
+                    + Tools.toNBitTernaryString(rTuple, m) + "&gt;";
+            if (getSelfSet(m).contains(p)) {
+                sb.append("<b>&nbsp;").append(pStr).append("</b>");
             } else {
-                sb.append(Tools.toNBitTernaryString(t, m));
+                sb.append(pStr);
             }
             sb.append("<br/>");
         }
@@ -99,31 +102,31 @@ public class F3RTNode {
     }
 
     public void print() {
-        for (int t : tuples) {
-            System.out.println(Tools.toNBitString(t, m));
+        for (int p : pairs) {
+            System.out.println(Tools.toNBitString(p, m));
         }
     }
 
     @Override
     public int hashCode() {
         int h = 0, MOD = 1000000007;
-        for (int t : tuples) {
-            h = (h + t) % MOD;
+        for (int p : pairs) {
+            h = (h + p) % MOD;
         }
         return h;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof F3RTNode that)) {
+        if (!(o instanceof F3PTNode that)) {
             return false;
         }
-        if (m != that.m || tuples.length != that.tuples.length) {
+        if (m != that.m || pairs.length != that.pairs.length) {
             return false;
         }
-        int len = tuples.length;
+        int len = pairs.length;
         for (int i = 0; i < len; i++) {
-            if (!Objects.equals(tuples[i], that.tuples[i])) {
+            if (!Objects.equals(pairs[i], that.pairs[i])) {
                 return false;
             }
         }

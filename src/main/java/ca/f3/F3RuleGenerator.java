@@ -1,10 +1,8 @@
 package ca.f3;
 
-import ca.catools.Tools;
-
 import java.util.*;
 
-public final class RuleGenerator {
+public final class F3RuleGenerator {
 	
 	public static String randomRule(Random rn) {
 		int[] arr = {2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0};
@@ -33,16 +31,14 @@ public final class RuleGenerator {
 	
 	public static String[] allLinearRules() {
 		Set<String> rs = new HashSet<>();
-		for (int a = 0; a < 3; a++) {
-			for (int i = 0; i < 3; i++) {
-				for (int j = 0; j < 3; j++) {
-					for (int k = 0; k < 3; k++) {
-						StringBuilder sb = new StringBuilder();
-						for (int b = 0; b < 27; b++) {
-							sb.append((b / 9 * i + b / 3 * j + (b % 3) * k + a) % 3);
-						}
-						rs.add(sb.reverse().toString());
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				for (int k = 0; k < 3; k++) {
+					StringBuilder sb = new StringBuilder();
+					for (int b = 0; b < 27; b++) {
+						sb.append((b / 9 * i + b / 3 * j + (b % 3) * k) % 3);
 					}
+					rs.add(sb.reverse().toString());
 				}
 			}
 		}
@@ -69,6 +65,29 @@ public final class RuleGenerator {
 					}
 				}
 			}
+		}
+		return ret;
+	}
+
+	public static String[] allD4LinearRules() {
+		Set<String> rs = new HashSet<>();
+		for (int h = 0; h < 3; h++) {
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 3; j++) {
+					for (int k = 0; k < 3; k++) {
+						StringBuilder sb = new StringBuilder();
+						for (int b = 0; b < 81; b++) {
+							sb.append((b / 27 * h +  b / 9 * i + b / 3 * j + (b % 3) * k) % 3);
+						}
+						rs.add(sb.reverse().toString());
+					}
+				}
+			}
+		}
+		String[] ret = new String[rs.size()];
+		int i = 0;
+		for (String r : rs) {
+			ret[i++] = r;
 		}
 		return ret;
 	}

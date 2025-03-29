@@ -47,6 +47,10 @@ public class RTNode {
         return palindromeSets.get(_m);
     }
 
+    public static RTNode getEmptyNode(int _m) {
+        return new RTNode(_m, new HashSet<>());
+    }
+
     public static RTNode getPalindromeNode(int _m) {
         return new RTNode(_m, getPalindromeSet(_m));
     }
@@ -83,11 +87,9 @@ public class RTNode {
     }
 
     public void writeNode(MutableNode mNode) {
-        boolean hasPalidrome = false;
         StringBuilder sb = new StringBuilder();
         for (int t : tuples) {
             if (getPalindromeSet(m).contains(t)) {
-                hasPalidrome = true;
                 sb.append("<b>&nbsp;").append(Tools.toNBitString(t, m)).append("</b>");
             } else {
                 sb.append(Tools.toNBitString(t, m));
@@ -95,7 +97,7 @@ public class RTNode {
             sb.append("<br/>");
         }
         mNode.add(Shape.RECTANGLE, Style.ROUNDED, Label.html(sb.toString()));
-        if (!hasPalidrome) {
+        if (isEden()) {
             mNode.add(Style.combine(Style.FILLED, Style.ROUNDED), Color.RED);
         }
     }

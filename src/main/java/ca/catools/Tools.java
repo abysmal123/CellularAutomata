@@ -4,6 +4,9 @@ package ca.catools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public final class Tools {
 
 	// 返回规则的整型表示
@@ -188,5 +191,38 @@ public final class Tools {
 	// 返回输出.log文件日志记录器
 	public static Logger getFileLogger() {
 		return LoggerFactory.getLogger("fileLogger");
+	}
+
+	// 返回一个用于生成平衡二进制数的迭代器
+	public static Iterator<Long> getBalancedRuleIterator(int m) {
+		return new BalancedRuleIterator(m);
+	}
+
+	private static class BalancedRuleIterator implements Iterator<Long> {
+        private long cur;
+        private final long limit;
+
+		public BalancedRuleIterator(int m) {
+            int n = 1 << m;
+			cur = (1L << (n >> 1)) - 1;
+			limit = 1L << n;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return cur < limit;
+		}
+
+		@Override
+		public Long next() {
+			if (!hasNext()) {
+				throw new NoSuchElementException();
+			}
+			long temp = cur;
+			long lb = cur & -cur;
+			long h = cur + lb;
+			cur = (((h ^ cur) >> 2) / lb) | h;
+			return temp;
+		}
 	}
 }

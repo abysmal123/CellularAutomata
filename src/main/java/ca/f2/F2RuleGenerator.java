@@ -4,7 +4,7 @@ import ca.catools.Tools;
 
 import java.util.*;
 
-public final class RuleGenerator {
+public final class F2RuleGenerator {
 	
 	public static String randomRule(Random rn, int diameter) {
 		int len = 1 << diameter, half = len >> 1;
@@ -51,6 +51,23 @@ public final class RuleGenerator {
 				sb.append(Integer.bitCount(mask & i) & 1);
 			}
 			ret.add(sb.toString());
+		}
+		return ret;
+	}
+
+	public static List<String> allLinearRulesAllowReverse(int diameter) {
+		int max = 1 << diameter;
+		List<String> ret = new ArrayList<>();
+		for (int mask = 0; mask < max; mask++) {
+			StringBuilder sb = new StringBuilder(max);
+			StringBuilder r_sb = new StringBuilder(max);
+			for (int i = max - 1; i >= 0; i--) {
+				int bit = Integer.bitCount(mask & i) & 1;
+				sb.append(bit);
+				r_sb.append(1 - bit);
+			}
+			ret.add(sb.toString());
+			ret.add(r_sb.toString());
 		}
 		return ret;
 	}

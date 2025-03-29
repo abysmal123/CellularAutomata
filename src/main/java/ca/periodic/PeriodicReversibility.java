@@ -1,56 +1,52 @@
-package ca.nullboundary;
+package ca.periodic;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
 
-public class NullReversibility {
-    public static boolean reversible(String r, int l_radius) {
+public class PeriodicReversibility {
+    public static boolean reversible(String r) {
         int d = checkLength(r);
-        int r_radius = d - l_radius - 1;
         boolean[] RULE = getRule(r);
-        Map<NTNode, NTNode[]> edges = new HashMap<>();
-        Queue<NTNode> processList = new ArrayDeque<>();
-        NTNode root = NTNode.getRootNode(d - 1, l_radius);
+        Map<PTNode, PTNode[]> edges = new HashMap<>();
+        Queue<PTNode> processList = new ArrayDeque<>();
+        PTNode root = PTNode.getSelfNode(d - 1);
         processList.offer(root);
         edges.put(root, root.getChildren(RULE));
-        boolean skipFirst = false;
         while (!processList.isEmpty()) {
-            NTNode cur = processList.poll();
-            if (skipFirst && cur.isEden(r_radius)) {
+            PTNode cur = processList.poll();
+            if (cur != root && cur.isEden()) {
                 return false;
             }
-            NTNode[] children = edges.get(cur);
+            PTNode[] children = edges.get(cur);
             for (int k = 0; k < 2; k++) {
                 if (!edges.containsKey(children[k])) {
                     processList.offer(children[k]);
                     edges.put(children[k], children[k].getChildren(RULE));
                 }
             }
-            skipFirst = true;
         }
         return true;
     }
 
-    // 运行“判断零边界下的严格可逆性”的算法，并返回算法结束时节点的数量
-    public static int countNodeWhenReturn(String r, int l_radius) {
+    // 运行“判断循环边界下的严格可逆性”的算法，并返回算法结束时节点的数量
+    public static int countNodeWhenReturn(String r) {
         int d = checkLength(r);
-        int r_radius = d - l_radius - 1;
         int count = 0;
         boolean[] RULE = getRule(r);
-        Map<NTNode, NTNode[]> edges = new HashMap<>();
-        Queue<NTNode> processList = new ArrayDeque<>();
-        NTNode root = NTNode.getRootNode(d - 1, l_radius);
+        Map<PTNode, PTNode[]> edges = new HashMap<>();
+        Queue<PTNode> processList = new ArrayDeque<>();
+        PTNode root = PTNode.getSelfNode(d - 1);
         processList.offer(root);
         edges.put(root, root.getChildren(RULE));
         while (!processList.isEmpty()) {
-            NTNode cur = processList.poll();
+            PTNode cur = processList.poll();
             count++;
-            if (cur.isEden(r_radius)) {
+            if (cur != root && cur.isEden()) {
                 return count;
             }
-            NTNode[] children = edges.get(cur);
+            PTNode[] children = edges.get(cur);
             for (int k = 0; k < 2; k++) {
                 if (!edges.containsKey(children[k])) {
                     processList.offer(children[k]);

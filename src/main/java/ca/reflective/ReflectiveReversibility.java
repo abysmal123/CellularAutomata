@@ -16,7 +16,7 @@ public final class ReflectiveReversibility {
         edges.put(root, root.getChildren(RULE));
         while (!processList.isEmpty()) {
             RTNode cur = processList.poll();
-            if (cur.isEden()) {
+            if (cur != root && cur.isEden()) {
                 return false;
             }
             RTNode[] children = edges.get(cur);

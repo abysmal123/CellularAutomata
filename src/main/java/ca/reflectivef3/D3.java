@@ -4,6 +4,8 @@
  *  */
 package ca.reflectivef3;
 
+import ca.f3.F3RuleGenerator;
+
 import java.util.*;
 
 public final class D3 {
@@ -155,7 +157,7 @@ public final class D3 {
 	
 // main:
 	public static void main(String[] args) throws Exception {
-		String r = ca.f3.RuleGenerator.linearRule(1, 2, 2, 0);
+		String r = F3RuleGenerator.linearRule(1, 2, 2, 0);
 		int n = 100;
 		initializeRule(r);
 		boolean[] result = reversibilityBefore(n);

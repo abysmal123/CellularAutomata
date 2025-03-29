@@ -1,26 +1,26 @@
-package ca.reflectivef3;
+package ca.periodicf3;
 
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
 
-public final class F3ReflectiveReversibility {
+public final class F3PeriodicReversibility {
     public static boolean reversible(String r) {
         int d = checkLength(r);
         int[] RULE = getRule(r);
-        Map<F3RTNode, F3RTNode[]> edges = new HashMap<>();
-        Queue<F3RTNode> processList = new ArrayDeque<>();
-        F3RTNode root = F3RTNode.getPalindromeNode(d - 1);
+        Map<F3PTNode, F3PTNode[]> edges = new HashMap<>();
+        Queue<F3PTNode> processList = new ArrayDeque<>();
+        F3PTNode root = F3PTNode.getSelfNode(d - 1);
         processList.offer(root);
         edges.put(root, root.getChildren(RULE));
         boolean skipFirst = false;
         while (!processList.isEmpty()) {
-            F3RTNode cur = processList.poll();
+            F3PTNode cur = processList.poll();
             if (skipFirst && cur.isEden()) {
                 return false;
             }
-            F3RTNode[] children = edges.get(cur);
+            F3PTNode[] children = edges.get(cur);
             for (int k = 0; k < 3; k++) {
                 if (!edges.containsKey(children[k])) {
                     processList.offer(children[k]);
