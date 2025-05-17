@@ -83,24 +83,30 @@ public class NullBucketChain {
         }
     }
 
+    /**
+     * 该方法支持多线程
+     * @param r         规则
+     * @param l_radius  左半径
+     * @param n         层数
+     * @return          前n层的可逆性函数值
+     */
     public static String reversibilityFunction(String r, int l_radius, int n) {
-        diameter = checkLength(r);
-        left_radius = l_radius;
-        right_radius = diameter - left_radius - 1;
+        int d = checkLength(r);
+        int r_radius = d - l_radius - 1;
         boolean[] RULE = getRule(r);
-        edges = new HashMap<>();
+        Map<NTNode, NTNode[]> e = new HashMap<>();
         Queue<NTNode> processList = new ArrayDeque<>();
-        NTNode empty = NTNode.getEmptyNode(diameter - 1);
-        NTNode root = NTNode.getRootNode(diameter - 1, left_radius);
+        NTNode empty = NTNode.getEmptyNode(d - 1);
+        NTNode root = NTNode.getRootNode(d - 1, l_radius);
         processList.offer(root);
-        edges.put(root, root.getChildren(RULE));
+        e.put(root, root.getChildren(RULE));
         while (!processList.isEmpty()) {
             NTNode cur = processList.poll();
-            NTNode[] children = edges.get(cur);
+            NTNode[] children = e.get(cur);
             for (int k = 0; k < 2; k++) {
-                if (!edges.containsKey(children[k])) {
+                if (!e.containsKey(children[k])) {
                     processList.offer(children[k]);
-                    edges.put(children[k], children[k].getChildren(RULE));
+                    e.put(children[k], children[k].getChildren(RULE));
                 }
             }
         }
@@ -112,10 +118,10 @@ public class NullBucketChain {
             char reversibility = '1';
             Set<NTNode> nextBucket = new HashSet<>();
             for (NTNode ptn : curBucket) {
-                if (ptn.isEden(right_radius)) {
+                if (ptn.isEden(r_radius)) {
                     reversibility = '0';
                 }
-                Collections.addAll(nextBucket, edges.get(ptn));
+                Collections.addAll(nextBucket, e.get(ptn));
             }
             curBucket = nextBucket;
             if (bucCnt != 0) {
